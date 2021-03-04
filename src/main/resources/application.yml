@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tus
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: password
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL82Dialect
+    hibernate:
+      ddl-auto: none
+
+spring.main.banner-mode: off
+management.endpoints.web.exposure.include: health, metrics, prometheus
+
+integrations:
+  contact-io:
+    url: http:dummyhttp.ssb
+  blaise-export:
+    url: http:dummyhttp.ssb
