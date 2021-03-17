@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Repository
 public interface RespondentRepository extends JpaRepository<Respondent, Long> {
-    List<Respondent> findByLastName(String lastName);
+    List<Respondent> findByName(String name);
     Optional<Respondent> findByRespondentId(UUID respondentId);
     List<Respondent> findAllByRespondentIdIn(Set<UUID> respondentIds);
     Optional<Respondent> findByPhone(String phone);

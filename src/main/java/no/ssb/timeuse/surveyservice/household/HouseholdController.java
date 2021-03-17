@@ -1,10 +1,13 @@
 package no.ssb.timeuse.surveyservice.household;
 
 import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
+import lombok.val;
 import no.ssb.timeuse.surveyservice.exception.ResourceNotFoundException;
 import no.ssb.timeuse.surveyservice.exception.ResourceValidationException;
 import no.ssb.timeuse.surveyservice.exception.ValidationException;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @RestController
@@ -44,7 +50,7 @@ public class HouseholdController {
     @PutMapping("/{id}")
     public Household updateHousehold(@PathVariable Long id, @RequestBody HouseholdRequest request) {
         repository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Household with id: " + id + " does not exist"));
+                .orElseThrow(() -> new ResourceNotFoundException("Household with id: " + id + " does not exist"));
 
         try {
             return repository.save(service.convertedToHousehold(id, request));

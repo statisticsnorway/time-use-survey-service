@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -71,10 +72,10 @@ public class Household {
     private String city;
 
     @Column(name = "RECRUITMENT_START")
-    private LocalDate recruitmentStart;
+    private LocalDateTime recruitmentStart;
 
     @Column(name = "RECRUITMENT_END")
-    private LocalDate recruitmentEnd;
+    private LocalDateTime recruitmentEnd;
 
     @Column(name = "RECRUITMENT_MINUTES_SPENT")
     private Integer recruitmentMinutesSpent;
@@ -84,6 +85,18 @@ public class Household {
 
     @Column(name = "HOUSEHOLD_SIZE")
     private Integer householdSize;
+
+    @Column(name = "REGION")
+    private String region;
+
+    @Column(name = "MUNICIPALITY_NUMBER")
+    private String municipalityNumber;
+
+    @Column(name = "DWELLING_NUMBER")
+    private String dwellingNumber;
+
+    @Column(name = "HOUSEHOLD_TYPE")
+    private String householdType;
 
     @OneToMany(mappedBy = "household", cascade = CascadeType.ALL)
     private List<Respondent> respondents;

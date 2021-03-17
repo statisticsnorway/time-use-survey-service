@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -19,15 +21,18 @@ public class HouseholdRequest {
     private String statusRecruitment;
     private String statusDiary;
     private String statusQuestionnaire;
-    private String diaryStart;
-    private String diaryEnd;
+    private LocalDate diaryStart;
+    private LocalDate diaryEnd;
     private String address;
     private String postcode;
     private String city;
-    private String recruitmentStart;
-    private String recruitmentEnd;
+    private LocalDateTime recruitmentStart;
+    private LocalDateTime recruitmentEnd;
     private Integer recruitmentMinutesSpent;
     private Boolean acceptedInitialDiaryStart;
     private Integer householdSize;
-
+    private String region;
+    private String municipalityNumber;
+    private String dwellingNumber;
+    private String householdType;
 }

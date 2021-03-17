@@ -1,0 +1,60 @@
+package no.ssb.timeuse.surveyservice.communicationlog;
+
+import io.micrometer.core.annotation.Timed;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import no.ssb.timeuse.surveyservice.communicationlog.contactio.ContactIoConsumer;
+import no.ssb.timeuse.surveyservice.exception.MethodNotAllowedException;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+@RestController
+@AllArgsConstructor
+@Timed
+@Slf4j
+@RequestMapping("/v1/communication-log-entries")
+public class CommunicationLogController {
+    private final CommunicationLogRepository repository;
+    private final CommunicationLogService service;
+    private final ContactIoConsumer consumer;
+
+    @CrossOrigin
+    @GetMapping
+    public List<CommunicationLogEntryResponse> entries(@RequestParam (required = false) Optional<Long> householdId, @RequestParam (required = false) Optional<UUID> respondentId) {
+        if(householdId.isPresent()) {
+            return repository.findByRespondentHouseholdId(householdId.get()).stream()
+                    .map(CommunicationLogEntryResponse::map)
+                    .collect(Collectors.toList());
+        } else if(respondentId.isPresent()) {
+            return repository.findByRespondentRespondentId(respondentId.get()).stream()
+                    .map(CommunicationLogEntryResponse::map)
+                    .collect(Collectors.toList());
+        } else {
+            throw new MethodNotAllowedException("You must either provide a householdId (Long) or a respondentId (UUID)");
+        }
+    }
+
+    @CrossOrigin
+    @PostMapping
+    public List<CommunicationLogEntryResponse> createNewCommunicationLogs(@RequestBody CommunicationLogEntryRequest communicationLogEntryRequest) {
+        return service.save(communicationLogEntryRequest).stream()
+                .map(CommunicationLogEntryResponse::map)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/test")
+    public void test() {
+        log.info("Calling Contact IO...");
+        consumer.call(repository.findAllByConfirmedSentIsNull());
+    }
+}

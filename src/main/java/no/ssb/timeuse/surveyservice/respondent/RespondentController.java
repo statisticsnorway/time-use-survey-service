@@ -46,8 +46,8 @@ public class RespondentController {
     @CrossOrigin
     @PutMapping("{respondentId}")
     public RespondentResponse updateRespondent(@PathVariable UUID respondentId, @RequestBody RespondentRequest respondentRequest) {
-            Respondent updatedRespondent = repository.save(service.mapToDao(respondentRequest, Optional.of(respondentId)));
-            return RespondentResponse.map(updatedRespondent);
+        Respondent updatedRespondent = repository.save(service.mapToDao(respondentRequest, Optional.of(respondentId)));
+        return RespondentResponse.map(updatedRespondent);
     }
 
 }

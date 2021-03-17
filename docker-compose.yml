@@ -8,10 +8,5 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=tus
     ports:
-      - 5432:5432
-    volumes:
-      - postgresdb:/var/lib/postgresql/data
-#      - ./init-db-and-user.sql:/docker-entrypoint-initdb.d/init.sql
-
-volumes:
-  postgresdb:
+      - 5433:5432
+    restart: always

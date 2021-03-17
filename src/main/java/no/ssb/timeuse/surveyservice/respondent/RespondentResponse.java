@@ -13,8 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class RespondentResponse {
-    String firstName;
-    String lastName;
+    String name;
     String phone;
     String email;
     String gender;
@@ -24,12 +23,13 @@ public class RespondentResponse {
     Integer householdSequenceNumber;
     Integer age;
     String relationToRecruitmentRefPerson;
+    String education;
+
 
     public static RespondentResponse map(Respondent from) {
         RespondentResponse response = RespondentResponse.builder()
                 .respondentId(from.getRespondentId())
-                .firstName(from.getFirstName())
-                .lastName(from.getLastName())
+                .name(from.getName())
                 .gender(from.getGender())
                 .dateOfBirth(from.getDateOfBirth())
                 .householdSequenceNumber(from.getHouseholdSequenceNumber())
@@ -38,6 +38,7 @@ public class RespondentResponse {
                 .iONumber(from.getHousehold().getIoNumber())
                 .age(from.getAge())
                 .relationToRecruitmentRefPerson(from.getRelationToRecruitmentRefPerson())
+                .education(from.getEducation())
                 .build();
         return response;
     }

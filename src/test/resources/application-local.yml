@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/tus
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: password
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL82Dialect
+    hibernate:
+      ddl-auto: none
+
+server:
+  port: 9100
+
+contact-io:
+  url: http://localhost:9101/v1/send
+  enabled: false

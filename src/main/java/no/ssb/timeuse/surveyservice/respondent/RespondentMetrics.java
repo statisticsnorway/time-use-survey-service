@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 public class RespondentMetrics {
 
-    private static final String METRICS_PREFIX = "fbu.ss.respondent.";
+    private static final String METRICS_PREFIX = "tus.ss.respondent.";
     private final AtomicInteger gaugeTotal;
 
     private final RespondentRepository respondentRepository;

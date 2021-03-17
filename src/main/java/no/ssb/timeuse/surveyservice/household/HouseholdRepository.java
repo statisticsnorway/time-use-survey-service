@@ -13,6 +13,10 @@ public interface HouseholdRepository extends JpaRepository<Household, Long> {
     @Query("select h.statusSurvey, count(h) from Household h group by h.statusSurvey")
     List<Object[]> getNumberOfHousehouldsPerStatusSurvey();
 
+    @Query("select h.statusSurvey, h.diaryStart, h.region, h.householdType, h.householdSize, count(h) from Household h group by h.statusSurvey, h.diaryStart, h.region, h.householdType, h.householdSize")
+    List<Object[]> getNumberOfHousehouldsPerAlot();
+
     Optional<Household> findByIoNumber(Long ioNumber);
 
 }
+

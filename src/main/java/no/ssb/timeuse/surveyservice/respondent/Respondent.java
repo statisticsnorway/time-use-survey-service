@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import no.ssb.timeuse.surveyservice.appointment.Appointment;
+import no.ssb.timeuse.surveyservice.communicationlog.CommunicationLogEntry;
 import no.ssb.timeuse.surveyservice.household.Household;
 
 import javax.persistence.CascadeType;
@@ -38,11 +40,8 @@ public class Respondent {
 //    @OneToMany(mappedBy = "respondent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<Purchase> purchases;
 
-    @Column(name = "FIRST_NAME")
-    private String firstName;
-
-    @Column(name = "LAST_NAME")
-    private String lastName;
+    @Column(name = "NAME")
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOUSEHOLD_ID")
@@ -72,10 +71,13 @@ public class Respondent {
     @Column(name = "RELATION_TO_RECRUITMENT_REF_PERSON")
     private String relationToRecruitmentRefPerson;
 
-//    @OneToMany(mappedBy = "respondent", cascade = CascadeType.ALL)
-//    private List<CommunicationLogEntry> communicationLogs;
-//
-//    @OneToMany(mappedBy = "respondent", cascade = CascadeType.ALL)
-//    private List<Appointment> appointments;
+    @Column(name = "EDUCATION")
+    private String education;
+
+    @OneToMany(mappedBy = "respondent", cascade = CascadeType.ALL)
+    private List<CommunicationLogEntry> communicationLogs;
+
+    @OneToMany(mappedBy = "respondent", cascade = CascadeType.ALL)
+    private List<Appointment> appointments;
 
 }

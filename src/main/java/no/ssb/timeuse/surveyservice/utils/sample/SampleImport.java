@@ -1,0 +1,39 @@
+package no.ssb.timeuse.surveyservice.utils.sample;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.UUID;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class SampleImport {
+
+    private String personIdentificator;
+    private String ioNumber;
+    private String referenceWeek;
+    private String householdSequenceNumber;
+    private String isReferencePerson;
+    private String householdType;
+    private Integer householdSize;
+    private String name;
+    private String careOfAddress;
+    private String address;
+    private String dwellingNumber;
+    private String postCode;
+    private String city;
+    private String municipalityNumber;
+    private String region;
+    private String dateOfBirth;
+    private Integer age;
+    private String gender;
+    private String education;
+    private String phone;
+    private String email;
+    private UUID newUUID;
+
+}

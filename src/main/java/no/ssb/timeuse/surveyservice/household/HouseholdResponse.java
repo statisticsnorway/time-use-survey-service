@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import no.ssb.timeuse.surveyservice.respondent.RespondentResponse;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -29,11 +30,16 @@ public class HouseholdResponse {
     String address;
     String postcode;
     String city;
-    LocalDate recruitmentStart;
-    LocalDate recruitmentEnd;
+    LocalDateTime recruitmentStart;
+    LocalDateTime recruitmentEnd;
     Integer recruitmentMinutesSpent;
     Boolean acceptedInitialDiaryStart;
     Integer householdSize;
+    String region;
+    String municipalityNumber;
+    String dwellingNumber;
+    String householdType;
+
     List<RespondentResponse> respondentList;
 
     public static HouseholdResponse map(Household from) {
@@ -56,9 +62,13 @@ public class HouseholdResponse {
                 from.getRecruitmentMinutesSpent(),
                 from.getAcceptedInitialDiaryStart(),
                 from.getHouseholdSize(),
+                from.getRegion(),
+                from.getMunicipalityNumber(),
+                from.getDwellingNumber(),
+                from.getHouseholdType(),
                 from.getRespondents().stream()
-                    .map(r -> RespondentResponse.map(r))
-                    .collect(Collectors.toList())
+                        .map(r -> RespondentResponse.map(r))
+                        .collect(Collectors.toList())
         );
     }
 }
