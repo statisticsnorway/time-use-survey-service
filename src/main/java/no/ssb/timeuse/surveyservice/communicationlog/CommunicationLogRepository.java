@@ -11,7 +11,6 @@ import java.util.UUID;
 @Repository
 public interface CommunicationLogRepository extends JpaRepository<CommunicationLogEntry, Long> {
     List<CommunicationLogEntry> findByRespondentRespondentId(UUID respondentId);
-    List<CommunicationLogEntry> findByRespondentHouseholdId(Long householdId);
 
     List<CommunicationLogEntry> findByConfirmedSent(LocalDateTime sent);
 

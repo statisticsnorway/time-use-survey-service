@@ -15,7 +15,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class AppointmentRequest {
-    //private Long householdNumber;
     private UUID respondentId;
     private LocalDateTime appointmentTime;
     private String description;

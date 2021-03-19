@@ -17,3 +17,6 @@ server:
 contact-io:
   url: http://localhost:9101/v1/send
   enabled: false
+
+flyway:
+  baseline-on-migrate=true:

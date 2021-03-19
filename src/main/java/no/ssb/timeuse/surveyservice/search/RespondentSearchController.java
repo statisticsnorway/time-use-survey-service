@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping("/v1/households/search")
+@RequestMapping("/v1/respondents/search")
 @AllArgsConstructor
-public class HouseholdSearchController {
+public class RespondentSearchController {
 
-    private final HouseholdSearchService service;
+    private final RespondentSearchService service;
 
     @CrossOrigin
     @PostMapping("/search-specific")
@@ -27,6 +27,6 @@ public class HouseholdSearchController {
     @CrossOrigin
     @PostMapping
     public ResponseEntity<?> searchSpecific(@RequestBody SearchRequest searchRequest) {
-        return new ResponseEntity<>(service.searchHouseholdSpecific(searchRequest), HttpStatus.OK);
+        return new ResponseEntity<>(service.searchRespondentSpecific(searchRequest), HttpStatus.OK);
     }
 }

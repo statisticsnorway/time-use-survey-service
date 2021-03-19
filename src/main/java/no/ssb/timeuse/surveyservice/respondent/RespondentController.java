@@ -50,5 +50,12 @@ public class RespondentController {
         return RespondentResponse.map(updatedRespondent);
     }
 
+
+    @CrossOrigin
+    @GetMapping("/io/{ioNumber}")
+    public RespondentResponse getByIoNumber(@PathVariable Long ioNumber) {
+        return repository.findByIoNumber(ioNumber).map(RespondentResponse::map).
+                orElseThrow(() -> new ResourceNotFoundException("Respondent with IO-number " + ioNumber + " does not exist"));
+    }
 }
 

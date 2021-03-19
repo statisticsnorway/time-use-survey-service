@@ -15,11 +15,6 @@ public class SampleImport {
 
     private String personIdentificator;
     private String ioNumber;
-    private String referenceWeek;
-    private String householdSequenceNumber;
-    private String isReferencePerson;
-    private String householdType;
-    private Integer householdSize;
     private String name;
     private String careOfAddress;
     private String address;

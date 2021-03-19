@@ -9,6 +9,6 @@ import java.util.UUID;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     List<Appointment> findByAssignedTo(String assignee);
-    List<Appointment> findByRespondentHouseholdIoNumber(Long ioNumber);
+    List<Appointment> findByRespondentIoNumber(Long ioNumber);
     List<Appointment> findByRespondentRespondentId(UUID respondentId);
 }

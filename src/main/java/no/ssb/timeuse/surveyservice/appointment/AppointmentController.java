@@ -48,7 +48,7 @@ public class AppointmentController {
                     .collect(Collectors.toList());
         }
         if (ioNumber.isPresent()) {
-            return repository.findByRespondentHouseholdIoNumber(ioNumber.get())
+            return repository.findByRespondentIoNumber(ioNumber.get())
                     .stream()
                     .map(r -> AppointmentResponse.map(r))
                     .collect(Collectors.toList());

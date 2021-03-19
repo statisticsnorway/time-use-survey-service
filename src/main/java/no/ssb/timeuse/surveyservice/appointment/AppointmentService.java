@@ -24,7 +24,7 @@ public class AppointmentService {
 
 
     public List<Appointment> getAppointmentsByioNumber(Long ioNumber) {
-        List<Appointment> appointmentList = repository.findByRespondentHouseholdIoNumber(ioNumber);
+        List<Appointment> appointmentList = repository.findByRespondentIoNumber(ioNumber);
 
         return appointmentList;
     }

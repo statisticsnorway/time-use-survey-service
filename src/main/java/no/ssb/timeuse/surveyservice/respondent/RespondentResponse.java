@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -13,18 +14,32 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class RespondentResponse {
+    Long iONumber;
     String name;
     String phone;
     String email;
     String gender;
     LocalDate dateOfBirth;
     UUID respondentId;
-    Long iONumber;
-    Integer householdSequenceNumber;
     Integer age;
-    String relationToRecruitmentRefPerson;
     String education;
+    String address;
+    String postcode;
+    String city;
+    String region;
+    String municipalityNumber;
+    String dwellingNumber;
 
+    LocalDate diaryStart;
+    LocalDate diaryEnd;
+    String statusDiary;
+    String statusSurvey;
+    String statusRecruitment;
+    String statusQuestionnaire;
+    LocalDateTime recruitmentStart;
+    LocalDateTime recruitmentEnd;
+    Integer recruitmentMinutesSpent;
+    Boolean acceptedInitialDiaryStart;
 
     public static RespondentResponse map(Respondent from) {
         RespondentResponse response = RespondentResponse.builder()
@@ -32,13 +47,27 @@ public class RespondentResponse {
                 .name(from.getName())
                 .gender(from.getGender())
                 .dateOfBirth(from.getDateOfBirth())
-                .householdSequenceNumber(from.getHouseholdSequenceNumber())
                 .phone(from.getPhone())
                 .email(from.getEmail())
-                .iONumber(from.getHousehold().getIoNumber())
+                .iONumber(from.getIoNumber())
                 .age(from.getAge())
-                .relationToRecruitmentRefPerson(from.getRelationToRecruitmentRefPerson())
                 .education(from.getEducation())
+                .address(from.getAddress())
+                .postcode(from.getPostcode())
+                .city(from.getCity())
+                .region(from.getRegion())
+                .municipalityNumber(from.getMunicipalityNumber())
+                .dwellingNumber(from.getDwellingNumber())
+                .diaryStart(from.getDiaryStart())
+                .diaryEnd(from.getDiaryEnd())
+                .statusDiary(from.getStatusDiary())
+                .statusSurvey(from.getStatusSurvey())
+                .statusRecruitment(from.getStatusRecruitment())
+                .statusQuestionnaire(from.getStatusQuestionnaire())
+                .recruitmentStart(from.getRecruitmentStart())
+                .recruitmentEnd(from.getRecruitmentEnd())
+                .recruitmentMinutesSpent(from.getRecruitmentMinutesSpent())
+                .acceptedInitialDiaryStart(from.getAcceptedInitialDiaryStart())
                 .build();
         return response;
     }

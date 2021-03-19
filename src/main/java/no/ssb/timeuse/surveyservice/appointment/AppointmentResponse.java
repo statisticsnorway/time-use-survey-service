@@ -15,7 +15,6 @@ import java.util.UUID;
 public class AppointmentResponse {
     Long id;
     UUID respondentId;
-    Long householdId;
     String name;
     LocalDateTime appointmentTime;
     String description;
@@ -26,7 +25,6 @@ public class AppointmentResponse {
         return new AppointmentResponse(
                 from.getId(),
                 from.getRespondent().getRespondentId(),
-                from.getRespondent().getHousehold().getId(),
                 from.getRespondent().getName(),
                 from.getAppointmentTime(),
                 from.getDescription(),

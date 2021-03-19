@@ -30,17 +30,13 @@ public class CommunicationLogController {
 
     @CrossOrigin
     @GetMapping
-    public List<CommunicationLogEntryResponse> entries(@RequestParam (required = false) Optional<Long> householdId, @RequestParam (required = false) Optional<UUID> respondentId) {
-        if(householdId.isPresent()) {
-            return repository.findByRespondentHouseholdId(householdId.get()).stream()
-                    .map(CommunicationLogEntryResponse::map)
-                    .collect(Collectors.toList());
-        } else if(respondentId.isPresent()) {
+    public List<CommunicationLogEntryResponse> entries(@RequestParam (required = false) Optional<UUID> respondentId) {
+        if(respondentId.isPresent()) {
             return repository.findByRespondentRespondentId(respondentId.get()).stream()
                     .map(CommunicationLogEntryResponse::map)
                     .collect(Collectors.toList());
         } else {
-            throw new MethodNotAllowedException("You must either provide a householdId (Long) or a respondentId (UUID)");
+            throw new MethodNotAllowedException("You must provide a respondentId (UUID)");
         }
     }
 

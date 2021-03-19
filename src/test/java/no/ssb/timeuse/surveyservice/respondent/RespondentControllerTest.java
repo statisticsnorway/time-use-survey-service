@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import no.ssb.timeuse.surveyservice.appointment.Appointment;
 import no.ssb.timeuse.surveyservice.exception.ResourceNotFoundException;
 import no.ssb.timeuse.surveyservice.exception.ResourceValidationException;
-import no.ssb.timeuse.surveyservice.household.Household;
 //import no.ssb.timeuse.surveyservice.purchase.Purchase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,10 +62,6 @@ public class RespondentControllerTest {
             .id(1L)
             .phone("982")
             .age(45)
-            .relationToRecruitmentRefPerson("03")
-            .household(Household.builder()
-                    .ioNumber(1L)
-                    .build())
             .appointments(Arrays.asList(Appointment.builder()
                     .description("avtale")
                     .build()))
@@ -86,7 +81,6 @@ public class RespondentControllerTest {
             .phone("982")
             .email("mail")
             .age(45)
-            .relationToRecruitmentRefPerson("03")
             .build();
 
     private RespondentResponse respondentResponse;
