@@ -3,6 +3,7 @@ package no.ssb.timeuse.surveyservice.respondent;
 
 import io.micrometer.core.annotation.Timed;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import no.ssb.timeuse.surveyservice.exception.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
+@Slf4j
 @AllArgsConstructor
 @Timed
 @RequestMapping("/v1/respondents")
@@ -46,7 +48,10 @@ public class RespondentController {
     @CrossOrigin
     @PutMapping("{respondentId}")
     public RespondentResponse updateRespondent(@PathVariable UUID respondentId, @RequestBody RespondentRequest respondentRequest) {
+        log.info("update respondent {}: {}", respondentId, respondentRequest);
+
         Respondent updatedRespondent = repository.save(service.mapToDao(respondentRequest, Optional.of(respondentId)));
+        log.info("put respondent: {}", updatedRespondent);
         return RespondentResponse.map(updatedRespondent);
     }
 

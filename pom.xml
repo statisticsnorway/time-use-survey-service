@@ -12,7 +12,7 @@
 	<artifactId>time-use-survey-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>time-use-survey-service</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Spring-boot project for time-use survey app backend</description>
 	<properties>
 		<java.version>15</java.version>
 	</properties>
@@ -93,6 +93,12 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>1.2.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.4.Final</version>
 		</dependency>
 
 	</dependencies>

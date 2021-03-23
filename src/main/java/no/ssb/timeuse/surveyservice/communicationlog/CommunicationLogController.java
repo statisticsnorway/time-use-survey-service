@@ -43,6 +43,7 @@ public class CommunicationLogController {
     @CrossOrigin
     @PostMapping
     public List<CommunicationLogEntryResponse> createNewCommunicationLogs(@RequestBody CommunicationLogEntryRequest communicationLogEntryRequest) {
+        log.info("communicationLogEntryRequest: {}", communicationLogEntryRequest);
         return service.save(communicationLogEntryRequest).stream()
                 .map(CommunicationLogEntryResponse::map)
                 .collect(Collectors.toList());

@@ -4,17 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class RespondentResponse {
-    Long iONumber;
+    Long ioNumber;
     String name;
     String phone;
     String email;
@@ -49,7 +51,7 @@ public class RespondentResponse {
                 .dateOfBirth(from.getDateOfBirth())
                 .phone(from.getPhone())
                 .email(from.getEmail())
-                .iONumber(from.getIoNumber())
+                .ioNumber(from.getIoNumber())
                 .age(from.getAge())
                 .education(from.getEducation())
                 .address(from.getAddress())
@@ -69,6 +71,7 @@ public class RespondentResponse {
                 .recruitmentMinutesSpent(from.getRecruitmentMinutesSpent())
                 .acceptedInitialDiaryStart(from.getAcceptedInitialDiaryStart())
                 .build();
+        log.info("response buildt: {}", response);
         return response;
     }
 }

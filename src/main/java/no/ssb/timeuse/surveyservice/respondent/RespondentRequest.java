@@ -18,7 +18,9 @@ public class RespondentRequest {
     private String name;
     private String phone;
     private String email;
+    private String dateOfBirth;
     private Integer age;
+    private String gender;
     private String education;
     private String address;
     private String postcode;

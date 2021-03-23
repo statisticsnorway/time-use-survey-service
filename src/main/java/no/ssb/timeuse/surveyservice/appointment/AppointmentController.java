@@ -2,6 +2,7 @@ package no.ssb.timeuse.surveyservice.appointment;
 
 import io.micrometer.core.annotation.Timed;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import no.ssb.timeuse.surveyservice.exception.ResourceNotFoundException;
 import no.ssb.timeuse.surveyservice.exception.ResourceValidationException;
@@ -24,6 +25,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @AllArgsConstructor
 @Timed
@@ -41,6 +43,7 @@ public class AppointmentController {
     public List<AppointmentResponse> entries(@RequestParam(required = false) Optional<Long> ioNumber,
                                              @RequestParam(required = false) Optional<UUID> respondentId,
                                              @RequestParam(required = false) Optional<String> assignedTo) {
+        log.info("ioNumber: {}, respondentId: {}, assignedTo: {}", ioNumber, respondentId, assignedTo);
        if (respondentId.isPresent()) {
             return repository.findByRespondentRespondentId(respondentId.get())
                     .stream()

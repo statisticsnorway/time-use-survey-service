@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import no.ssb.timeuse.surveyservice.exception.ResourceNotFoundException;
 import no.ssb.timeuse.surveyservice.respondent.RespondentRepository;
 import no.ssb.timeuse.surveyservice.respondent.RespondentResponse;
-import no.ssb.timeuse.surveyservice.respondent.Respondent;
-import no.ssb.timeuse.surveyservice.respondent.RespondentRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,6 +20,12 @@ public class RespondentSearchService {
                 .map(RespondentResponse::map)
                 .collect(Collectors.toList());
     }
+
+    public List<RespondentResponse> findRespondentsByGroupFilter(SearchRequestGroup group) {
+        return respondentRepository.searchForRespondents(group).stream().map(RespondentResponse::map).collect(Collectors.toList());
+    }
+
+
 
     public RespondentResponse searchRespondentSpecific(SearchRequest searchRequest) {
         if (searchRequest.telephone != null) {
@@ -41,25 +45,19 @@ public class RespondentSearchService {
 
 
     // TODO: Use native query in repository for flexible WHERE <key> = <value>
-    private List<Person> findByFirstName() {
+    private List<Person> findByName() {
         return List.of(
-                new Person("Tor", "Lindberg", "12"),
-                new Person("Bjørn", "Kvernstuen", "34"),
-                new Person("Hans", "Rotmo", "56"));
+                new Person("Tor", "12"),
+                new Person("Bjørn", "34"),
+                new Person("Hans", "56") );
     }
 
-    private List<Person> findByLastName() {
-        return List.of(
-                new Person("Tor", "Lindberg", "12"),
-                new Person("Bjørn", "Lindberg", "34"),
-                new Person("Hans", "Lindberg", "56"));
-    }
 
     private List<Person> findAll() {
         return List.of(
-                new Person("Tor", "Lindberg", "12"),
-                new Person("Tor", "Kvernstuen", "34"),
-                new Person("Tor", "Rotmo", "56"));
+                new Person("Tor", "12"),
+                new Person("Bjørn", "34"),
+                new Person("Hans", "56") );
     }
 
 
