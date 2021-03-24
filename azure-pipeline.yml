@@ -45,7 +45,7 @@ resources:
       type: github
       name: statisticsnorway/azure-pipelines-templates
 #      ref: refs/tags/1.1.19
-      ref: feature/main-run-as-master
+      ref: main-branch-treated-as-master
       endpoint: github-Tidsbruksprosjektet
 
 # Job which runs mvn test and verify, Sonar Analysis (if branch is master), mvn install,
