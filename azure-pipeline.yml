@@ -30,6 +30,8 @@ variables:
     value: 'refs/heads/main'
   - name: 'connections'
     value: 'mvnSsbBipPublic-Tidsbruksprosjektet, mvnSsbBipReleases-Tidsbruksprosjektet, mvnSsbBipSnapshots-Tidsbruksprosjektet'
+  - name: 'gcrServiceConnection'
+    value: 'gcrServiceConnection-Tidsbruksprosjektet'  
 
 #  - name: imageTagBeforeVulnerabilityScan
 #    value: 'imagescan-$(Build.SourceBranchName)-$(fullSha)'
