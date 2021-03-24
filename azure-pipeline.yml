@@ -27,7 +27,9 @@ variables:
   - name: repoName
     value: 'prod-bip/ssb/tidsbruk/time-use-survey-service'
   - name: masterTag
-    value: "refs/heads/main"
+    value: 'refs/heads/main'
+  - name: 'connections'
+    value: 'mvnSsbBipPublic-Tidsbruksprosjektet, mvnSsbBipReleases-Tidsbruksprosjektet, mvnSsbBipSnapshots-Tidsbruksprosjektet'
 
 #  - name: imageTagBeforeVulnerabilityScan
 #    value: 'imagescan-$(Build.SourceBranchName)-$(fullSha)'
@@ -59,6 +61,7 @@ jobs:
       artifactName: time-use-survey-service
       mavenContainer: maven:3-openjdk-15
       checkStyleRunAnalysis: false
+      connections: $(connections)
 
 
 #  # Pull and retag docker image. Will only run if it is a tag-operation on the repo.
