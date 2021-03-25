@@ -27,7 +27,7 @@ variables:
   - name: repoName
     value: 'prod-bip/ssb/tidsbruk/timeuse-survey-service'
   - name: masterTag
-    value: 'refs/heads/main'
+    value: 'refs/heads/master'
   - name: 'connections'
     value: 'mvnSsbBipPublic-Tidsbruksprosjektet, mvnSsbBipReleases-Tidsbruksprosjektet, mvnSsbBipSnapshots-Tidsbruksprosjektet'
   - name: 'gcrServiceConnection'
