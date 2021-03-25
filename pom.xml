@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>no.ssb.timeuse</groupId>
-	<artifactId>time-use-survey-service</artifactId>
+	<artifactId>timeuse-survey-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>time-use-survey-service</name>
-	<description>Spring-boot project for time-use survey app backend</description>
+	<name>timeuse-survey-service</name>
+	<description>Spring-boot project for timeuse survey app backend</description>
 	<properties>
 		<java.version>15</java.version>
 	</properties>

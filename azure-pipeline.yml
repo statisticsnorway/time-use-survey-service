@@ -23,9 +23,9 @@ variables:
 #  - name: fullSha
 #    value: '$(Build.SourceVersion)'
   - name: imageName
-    value: 'eu.gcr.io/prod-bip/ssb/tidsbruk/time-use-survey-service'
+    value: 'eu.gcr.io/prod-bip/ssb/tidsbruk/timeuse-survey-service'
   - name: repoName
-    value: 'prod-bip/ssb/tidsbruk/time-use-survey-service'
+    value: 'prod-bip/ssb/tidsbruk/timeuse-survey-service'
   - name: masterTag
     value: 'refs/heads/main"
 
@@ -33,10 +33,10 @@ variables:
 #    value: 'imagescan-$(Build.SourceBranchName)-$(fullSha)'
 #  - name: imageTagAfterVulnerabilityScan
 #    value: $(Build.SourceBranchName)-$(fullSha)
-#  - name:  MAVEN_CACHE_FOLDER
-#    value: $(Pipeline.Workspace)/.m2/repository
-#  - name: MAVEN_OPTS
-#    value: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
+  - name:  MAVEN_CACHE_FOLDER
+    value: $(Pipeline.Workspace)/.m2/repository
+  - name: MAVEN_OPTS
+    value: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
 
 
 resources:
@@ -56,7 +56,7 @@ jobs:
       project: forbruk
       imageName: $(imageName)
       repoName: $(repoName)
-      artifactName: time-use-survey-service
+      artifactName: timeuse-survey-service
       mavenContainer: maven:3-openjdk-15
       checkStyleRunAnalysis: false
 
