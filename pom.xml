@@ -15,6 +15,8 @@
 	<description>Spring-boot project for timeuse survey app backend</description>
 	<properties>
 		<java.version>15</java.version>
+		<pmd.version>6.32.0</pmd.version>
+
 	</properties>
 
 	<profiles>
@@ -180,6 +182,25 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.13.0</version>
+				<dependencies>
+					<dependency>
+						<groupId>net.sourceforge.pmd</groupId>
+						<artifactId>pmd-core</artifactId>
+						<version>${pmd.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>net.sourceforge.pmd</groupId>
+						<artifactId>pmd-java</artifactId>
+						<version>${pmd.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
