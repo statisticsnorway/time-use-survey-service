@@ -20,8 +20,8 @@ variables:
   # Azure Pipelines
   - group: Hemmeligheter
   # Variables defined here
-#  - name: fullSha
-#    value: '$(Build.SourceVersion)'
+  - name: fullSha
+    value: '$(Build.SourceVersion)'
   - name: imageName
     value: 'eu.gcr.io/prod-bip/ssb/tidsbruk/timeuse-survey-service'
   - name: repoName
@@ -33,10 +33,10 @@ variables:
   - name: 'gcrServiceConnection'
     value: 'gcrServiceConnection-Tidsbruksprosjektet'  
 
-#  - name: imageTagBeforeVulnerabilityScan
-#    value: 'imagescan-$(Build.SourceBranchName)-$(fullSha)'
-#  - name: imageTagAfterVulnerabilityScan
-#    value: $(Build.SourceBranchName)-$(fullSha)
+  - name: imageTagBeforeVulnerabilityScan
+    value: 'imagescan-$(Build.SourceBranchName)-$(fullSha)'
+  - name: imageTagAfterVulnerabilityScan
+    value: $(Build.SourceBranchName)-$(fullSha)
   - name:  MAVEN_CACHE_FOLDER
     value: $(Pipeline.Workspace)/.m2/repository
   - name: MAVEN_OPTS
