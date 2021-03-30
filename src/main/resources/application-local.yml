@@ -5,9 +5,9 @@ spring:
     username: postgres
     password: password
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL82Dialect
+    database: POSTGRESQL
+    show-sql: false
+    open-in-view: false
     hibernate:
       ddl-auto: update
 
@@ -17,6 +17,6 @@ server:
 contact-io:
   url: http://localhost:9101/v1/send
   enabled: false
-
-flyway:
-  baseline-on-migrate=true:
+#
+#flyway:
+#  baseline-on-migrate=true:

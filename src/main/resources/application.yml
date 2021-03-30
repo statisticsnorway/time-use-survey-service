@@ -11,7 +11,7 @@ spring:
     banner-mode: off
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/tidsbruk-db
+    url: jdbc:postgresql://localhost:5432/timeuse-db
     driver-class-name: org.postgresql.Driver
     username: dummy_value
     password: dummy_value
@@ -29,9 +29,44 @@ springdoc:
   api-docs:
     path: /api-docs
 
-management.endpoints.web.exposure.include: health, metrics, prometheus
+management:
+  endpoints:
+    web:
+      exposure.include: health, metrics, prometheus
+    enable-by-default: true
+
+tracing:
+  enabled: true
+  service: nets-app
+  sampler-type: const
+  sampler-param: 1
+  propagation: b3
+  protocol: http
+  host: localhost
+  port: 14268
+  path: /api/traces
+  paths:
+    - path: "/favicon.ico"
+      enabled: false
+    - path: "/metrics"
+      enabled: false
+    - path: "/metrics/vendor"
+      enabled: false
+    - path: "/metrics/base"
+      enabled: false
+    - path: "/metrics/application"
+      enabled: false
+    - path: "/health"
+      enabled: false
+    - path: "/health/alive"
+      enabled: false
+    - path: "/health/ready"
+      enabled: false
+
+
+
 
 contact-io:
-#  url: ${CONTACT_IO_URL}
+  url: ${CONTACT_IO_URL}
   enabled: true
-  url: http:dummyhttp.ssb
+#  url: http:dummyhttp.ssb
