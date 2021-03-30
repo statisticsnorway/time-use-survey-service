@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/tus
+    url: jdbc:postgresql://localhost:5433/timeuse-db
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: password
@@ -9,7 +9,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL82Dialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
 
 server:
   port: 9100

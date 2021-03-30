@@ -6,7 +6,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=tus
+      - POSTGRES_DB=timeuse-db
     ports:
       - 5433:5432
     restart: always

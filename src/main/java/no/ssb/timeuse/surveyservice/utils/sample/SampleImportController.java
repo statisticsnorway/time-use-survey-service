@@ -3,6 +3,8 @@ package no.ssb.timeuse.surveyservice.utils.sample;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import no.ssb.timeuse.surveyservice.activitiy.ActivityCategory;
+import no.ssb.timeuse.surveyservice.activitiy.ActivityCategoryRepository;
 import no.ssb.timeuse.surveyservice.exception.ResourceValidationException;
 import no.ssb.timeuse.surveyservice.respondent.RespondentRepository;
 import no.ssb.timeuse.surveyservice.respondent.RespondentService;
@@ -31,6 +33,7 @@ public class SampleImportController {
     RespondentService respondentService;
     RespondentIdMapperRepository respondentIdMapperRepository;
     RespondentIdMapperService respondentIdMapperService;
+    ActivityCategoryRepository activityCategoryRepository;
 
     @PostMapping
     public void importRespondents(@RequestBody List<SampleImport> from) {
@@ -82,6 +85,11 @@ public class SampleImportController {
         } catch (Exception e) {
             throw new ResourceValidationException("SampleImport with ioNumber " + request.getIoNumber() + " is invalid");
         }
+    }
+
+    @PostMapping("/activityCategories")
+    public void importActivityCategories(@RequestBody List<ActivityCategory> activityCategories) {
+        List<ActivityCategory> res = activityCategoryRepository.saveAll(activityCategories);
     }
 
 }
