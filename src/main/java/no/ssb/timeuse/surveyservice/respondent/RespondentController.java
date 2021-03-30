@@ -19,6 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 
+@CrossOrigin
 @RestController
 @Slf4j
 @AllArgsConstructor
@@ -29,7 +30,6 @@ public class RespondentController {
     private final RespondentRepository repository;
     private final RespondentService service;
 
-    @CrossOrigin
     @GetMapping
     public List<RespondentResponse> entries() {
         return repository.findAll().stream()
@@ -37,7 +37,6 @@ public class RespondentController {
                 .collect(Collectors.toList());
     }
 
-    @CrossOrigin
     @GetMapping("{respondentId}")
     public RespondentResponse findRespondentByRespondentId(@PathVariable UUID respondentId) {
         return repository.findByRespondentId(respondentId)
@@ -45,7 +44,6 @@ public class RespondentController {
                 .orElseThrow(() -> new ResourceNotFoundException("Respondent with respondentId " + respondentId + " does not exist"));
     }
 
-    @CrossOrigin
     @PutMapping("{respondentId}")
     public RespondentResponse updateRespondent(@PathVariable UUID respondentId, @RequestBody RespondentRequest respondentRequest) {
         log.info("update respondent {}: {}", respondentId, respondentRequest);
@@ -56,11 +54,11 @@ public class RespondentController {
     }
 
 
-    @CrossOrigin
     @GetMapping("/io/{ioNumber}")
     public RespondentResponse getByIoNumber(@PathVariable Long ioNumber) {
         return repository.findByIoNumber(ioNumber).map(RespondentResponse::map).
                 orElseThrow(() -> new ResourceNotFoundException("Respondent with IO-number " + ioNumber + " does not exist"));
     }
+
 }
 

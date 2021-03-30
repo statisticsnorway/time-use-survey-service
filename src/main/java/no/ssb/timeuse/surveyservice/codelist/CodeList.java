@@ -14,9 +14,12 @@ public class CodeList {
             /**
              * recruitment codes
              */
-            entry("FINISHED", new CodeInfo("Ferdig/avsluttet", Arrays.asList(Status.SURVEY, Status.QUESTIONNAIRE))),
+            entry("FINISHED", new CodeInfo("Ferdig/avsluttet", Arrays.asList(Status.SURVEY, Status.DIARY, Status.QUESTIONNAIRE))),
             entry("STARTED", new CodeInfo("Påbegynt", Arrays.asList(Status.SURVEY, Status.DIARY, Status.QUESTIONNAIRE))),
-            entry("NOT_STARTED", new CodeInfo("Ikke påbegynt", Arrays.asList(Status.SURVEY, Status.DIARY, Status.QUESTIONNAIRE))),
+            entry("NOT_STARTED", new CodeInfo("Ikke påbegynt", Arrays.asList(Status.RECRUITMENT, Status.SURVEY, Status.DIARY, Status.QUESTIONNAIRE))),
+
+            entry("INTERVIEWED", new CodeInfo("Intervjuet", Arrays.asList(Status.SURVEY))),
+            entry("LOGININFO_SENT", new CodeInfo("Innloggingsinformasjon sendt", Arrays.asList(Status.SURVEY))),
 
             entry("01", new CodeInfo("Rekruttert", Arrays.asList(Status.RECRUITMENT))),
             entry("02", new CodeInfo("Påbegynt", Arrays.asList(Status.RECRUITMENT))),
@@ -58,5 +61,5 @@ public class CodeList {
             entry("94", new CodeInfo("Har ikke fast bopel", Arrays.asList(Status.SURVEY, Status.RECRUITMENT))),
             entry("99", new CodeInfo("Andre avgangsgrunner", Arrays.asList(Status.SURVEY, Status.RECRUITMENT)))
 
-            );
+    );
 }

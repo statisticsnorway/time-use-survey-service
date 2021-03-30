@@ -1,15 +1,26 @@
+webserver:
+  host: 0.0.0.0
+  port: 10140
+  access-log:
+    format: "%h %u %t %r %s %b %{Referer}i %T"
+
+
 spring:
+  # Don't print the Spring logo banner at startup (We want only JSON logs printed to stdout)
+  main:
+    banner-mode: off
   datasource:
-    url: jdbc:postgresql://localhost:5433/tus
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/tidsbruk-db
     driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: password
+    username: dummy_value
+    password: dummy_value
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL82Dialect
+    database: POSTGRESQL
+    show-sql: true
+    open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
 
 server:
   port: 9100
@@ -18,7 +29,6 @@ springdoc:
   api-docs:
     path: /api-docs
 
-spring.main.banner-mode: off
 management.endpoints.web.exposure.include: health, metrics, prometheus
 
 contact-io:

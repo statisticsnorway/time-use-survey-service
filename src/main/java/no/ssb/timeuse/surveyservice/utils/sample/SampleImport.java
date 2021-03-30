@@ -30,5 +30,9 @@ public class SampleImport {
     private String phone;
     private String email;
     private UUID newUUID;
+    private String statusRecruitment = "NOT_STARTED";
+    private String statusQuestionnaire = "NOT_STARTED";
+    private String statusDiary = "NOT_STARTED";
+    private String statusSurvey = "NOT_STARTED";
 
 }

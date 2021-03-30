@@ -78,10 +78,10 @@ public class RespondentService {
                 .postcode(request.getPostCode())
                 .dwellingNumber(request.getDwellingNumber())
                 .municipalityNumber(request.getMunicipalityNumber())
-                .statusRecruitment("NOT_STARTED")
-                .statusQuestionnaire("NOT_STARTED")
-                .statusDiary("NOT_STARTED")
-                .statusSurvey("NOT_STARTED")
+                .statusRecruitment(request.getStatusRecruitment())
+                .statusQuestionnaire(request.getStatusQuestionnaire())
+                .statusDiary(request.getStatusDiary())
+                .statusSurvey(request.getStatusSurvey())
                 .build();
     }
 

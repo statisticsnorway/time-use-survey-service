@@ -21,6 +21,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @Slf4j
 @AllArgsConstructor
 @RequestMapping("/v1/sample_import")
@@ -31,7 +32,6 @@ public class SampleImportController {
     RespondentIdMapperRepository respondentIdMapperRepository;
     RespondentIdMapperService respondentIdMapperService;
 
-    @CrossOrigin
     @PostMapping
     public void importRespondents(@RequestBody List<SampleImport> from) {
 
@@ -67,10 +67,17 @@ public class SampleImportController {
 
     }
 
+
+    @PostMapping("/clean")
+    public void cleanRespondents() {
+        respondentRepository.deleteAll();
+    }
+
+
     public void validateSampleImport(SampleImport request) {
         try {
             Long.parseLong(request.getIoNumber());
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate.parse(request.getDateOfBirth(), dateTimeFormatter);
         } catch (Exception e) {
             throw new ResourceValidationException("SampleImport with ioNumber " + request.getIoNumber() + " is invalid");
