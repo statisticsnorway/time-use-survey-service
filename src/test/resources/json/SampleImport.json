@@ -16,7 +16,9 @@
     "city": "VESTBY",
     "education": "1",
     "phone": "99999990",
-    "email": "aaa@bbb.no"
+    "email": "aaa@bbb.no",
+    "diaryStart": "2021-05-01",
+    "diaryEnd": "2021-05-02"
   },
   {
     "personIdentificator": "19800199999",
@@ -35,7 +37,9 @@
     "city": "VESTBY",
     "education": "3",
     "phone": "99999992",
-    "email": "bbb@bbb.no"
+    "email": "bbb@bbb.no",
+    "diaryStart": "2021-05-01",
+    "diaryEnd": "2021-05-02"
   },
   {
     "personIdentificator": "20041099999",
@@ -55,9 +59,12 @@
     "education": "4",
     "phone": "99999993",
     "email": "ccc@bbb.no",
-    "statusSurvey": "NOT_STARTED",
-    "statusRecruitment": "INTERVIEWED",
-    "statusQuestionnaire": "NOT_STARTED"
+    "statusSurvey": "INTERVIEWED",
+    "statusRecruitment": "STARTED",
+    "statusQuestionnaire": "NOT_STARTED",
+    "statusDiary": "INVITATION_SENT",
+    "diaryStart": "2021-05-02",
+    "diaryEnd": "2021-05-03"
   },
   {
     "personIdentificator": "20090999999",
@@ -77,9 +84,11 @@
     "education": "",
     "phone": "99999994",
     "email": "ddd@bbb.no",
-    "statusSurvey": "STARTED",
-    "statusRecruitment": "INTERVIEWED",
-    "statusQuestionnaire": "NOT_STARTED"
+    "statusSurvey": "INTERVIEWED",
+    "statusRecruitment": "STARTED",
+    "statusQuestionnaire": "NOT_STARTED",
+    "diaryStart": "2021-05-05",
+    "diaryEnd": "2021-05-06"
   },
   {
     "personIdentificator": "19550399999",
@@ -99,10 +108,12 @@
     "education": "2",
     "phone": "99999995",
     "email": "eee@bbb.no",
-    "statusSurvey": "STARTED",
-    "statusRecruitment": "INTERVIEWED",
+    "statusSurvey": "INTERVIEWED",
+    "statusRecruitment": "STARTED",
     "statusQuestionnaire": "NOT_STARTED",
-    "statusDiary": "STARTED"
+    "statusDiary": "STARTED",
+    "diaryStart": "2021-05-05",
+    "diaryEnd": "2021-05-06"
   },
   {
     "personIdentificator": "19550599999",
@@ -121,7 +132,13 @@
     "city": "OSLO",
     "education": "2",
     "phone": "99999996",
-    "email": "fff@bbb.no"
+    "email": "fff@bbb.no",
+    "statusSurvey": "INTERVIEWED",
+    "statusRecruitment": "STARTED",
+    "statusQuestionnaire": "STARTED",
+    "statusDiary": "STARTED",
+    "diaryStart": "2021-05-02",
+    "diaryEnd": "2021-05-03"
   },
   {
     "personIdentificator": "19750499999",
@@ -140,6 +157,12 @@
     "city": "KONGSVINGER",
     "education": "",
     "phone": "99999997",
-    "email": "ggg@bbb.no"
+    "email": "ggg@bbb.no",
+    "diaryStart": "2021-05-07",
+    "diaryEnd": "2021-05-08",
+    "statusSurvey": "FINISHED",
+    "statusRecruitment": "STARTED",
+    "statusQuestionnaire": "STARTED",
+    "statusDiary": "FINISHED"
   }
 ]

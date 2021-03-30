@@ -34,5 +34,8 @@ public class SampleImport {
     private String statusQuestionnaire = "NOT_STARTED";
     private String statusDiary = "NOT_STARTED";
     private String statusSurvey = "NOT_STARTED";
+    private String diaryStart;
+    private String diaryEnd;
+
 
 }

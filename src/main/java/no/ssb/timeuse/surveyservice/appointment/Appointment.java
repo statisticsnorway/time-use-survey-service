@@ -30,7 +30,7 @@ public class Appointment {
     @SequenceGenerator(name="appointment_seq_generator", sequenceName="APPOINTMENT_SEQ", allocationSize = 1)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "RESPONDENT_ID", nullable = false)
     private Respondent respondent;
 

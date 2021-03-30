@@ -82,6 +82,8 @@ public class RespondentService {
                 .statusQuestionnaire(request.getStatusQuestionnaire())
                 .statusDiary(request.getStatusDiary())
                 .statusSurvey(request.getStatusSurvey())
+                .diaryStart(LocalDate.parse(request.getDiaryStart(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .diaryEnd(LocalDate.parse(request.getDiaryEnd(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .build();
     }
 

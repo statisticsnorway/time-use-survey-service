@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Slf4j
 @Data
 @Builder
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class AppointmentResponse {
     String createdBy;
 
     public static AppointmentResponse map(Appointment from) {
+        log.info("appointment: {}", from);
         return new AppointmentResponse(
                 from.getId(),
                 from.getRespondent().getRespondentId(),
