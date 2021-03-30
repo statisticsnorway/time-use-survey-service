@@ -67,6 +67,6 @@ tracing:
 
 
 contact-io:
-  url: ${CONTACT_IO_URL}
+#  url: ${CONTACT_IO_URL}
   enabled: true
-#  url: http:dummyhttp.ssb
+  url: http:dummyhttp.ssb
