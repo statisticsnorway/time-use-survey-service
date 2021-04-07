@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import no.ssb.timeuse.surveyservice.respondent.Respondent;
 
 import javax.persistence.Column;
@@ -46,4 +47,15 @@ public class Appointment {
     @Column(name = "CREATED_BY")
     private String createdBy;
 
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "id=" + id +
+                ", respondentId=" + respondent.getRespondentId() +
+                ", appointmentTime=" + appointmentTime +
+                ", description='" + description + '\'' +
+                ", assignedTo='" + assignedTo + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                '}';
+    }
 }

@@ -27,19 +27,25 @@ public class RespondentSearchService {
 
 
 
-    public RespondentResponse searchRespondentSpecific(SearchRequest searchRequest) {
+    public List<RespondentResponse> searchRespondentSpecific(SearchRequest searchRequest) {
         if (searchRequest.telephone != null) {
-            return respondentRepository.findByPhone(searchRequest.getTelephone())
-                    .map(RespondentResponse::map)
-                    .orElseThrow(() -> new ResourceNotFoundException("Respondent with telephone number " + searchRequest.getTelephone() + " does not exist"));
+            return respondentRepository.findAllByPhoneIgnoreCase(searchRequest.getTelephone())
+                    .stream().map((RespondentResponse::map))
+                    .collect(Collectors.toList());
         } else if (searchRequest.email != null) {
-            return respondentRepository.findByEmail(searchRequest.getEmail())
-                    .map(RespondentResponse::map)
-                    .orElseThrow(() -> new ResourceNotFoundException("Respondent with email " + searchRequest.getEmail() + " does not exist"));
+            return respondentRepository.findAllByEmailContainingIgnoreCase(searchRequest.getEmail())
+                    .stream().map((RespondentResponse::map))
+                    .collect(Collectors.toList());
         }
+        else if (searchRequest.name != null) {
+            return respondentRepository.findAllByNameContainingIgnoreCase(searchRequest.getName())
+                    .stream().map((RespondentResponse::map))
+                    .collect(Collectors.toList());
+        }
+
         return respondentRepository.findByIoNumber(searchRequest.getIoNumber())
                 .map(RespondentResponse::map)
-                .orElseThrow(() -> new ResourceNotFoundException("Respondent with ioNumber " + searchRequest.getIoNumber() + " does not exist"));
+                .stream().collect(Collectors.toList());
 
     }
 

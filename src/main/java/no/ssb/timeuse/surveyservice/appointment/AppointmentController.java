@@ -107,6 +107,7 @@ public class AppointmentController {
     @CrossOrigin
     @PostMapping
     public ResponseEntity<?> createNewAppointment(@RequestBody AppointmentRequest request) {
+        log.info("request: {}", request.toString());
         if (respondentRepository.findByRespondentId(request.getRespondentId()).isEmpty()) {
             throw new ResourceValidationException("Respondent with respondentId " + request.getRespondentId() + " does not exist");
         }
@@ -129,6 +130,7 @@ public class AppointmentController {
             appointment.setId(id.get());
         }
 
+        log.info("appointment converted: {}", appointment.toString());
         return appointment;
     }
 

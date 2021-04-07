@@ -12,6 +12,19 @@ import java.util.UUID;
 
 @Repository
 public interface RespondentRepository extends JpaRepository<Respondent, Long>, RespondentSearchRepository {
+    List<Respondent> findByName(String name);
+    Optional<Respondent> findByIoNumber(Long ioNumber);
+    Optional<Respondent> findByRespondentId(UUID respondentId);
+    List<Respondent> findAllByRespondentIdIn(Set<UUID> respondentIds);
+
+    void deleteById(Long id);
+
+    void deleteAllByIdIn(List<Long> id);
+    List<Respondent> findAllByPhoneIgnoreCase(String phone);
+    List<Respondent> findAllByEmailContainingIgnoreCase(String email);
+    List<Respondent> findAllByNameContainingIgnoreCase(String name);
+
+
     @Query("select h.statusSurvey, h.diaryStart, h.region, count(h) " +
             "from Respondent h group by h.statusSurvey, h.diaryStart, h.region")
     List<Object[]> getNumberOfRespondentsPerStatusSurvey();
@@ -28,10 +41,5 @@ public interface RespondentRepository extends JpaRepository<Respondent, Long>, R
             "from Respondent h group by h.statusQuestionnaire, h.diaryStart, h.region")
     List<Object[]> getNumberOfRespondentsPerStatusQuestionnaire();
 
-    List<Respondent> findByName(String name);
-    Optional<Respondent> findByIoNumber(Long ioNumber);
-    Optional<Respondent> findByRespondentId(UUID respondentId);
-    List<Respondent> findAllByRespondentIdIn(Set<UUID> respondentIds);
-    Optional<Respondent> findByPhone(String phone);
-    Optional<Respondent> findByEmail(String email);
+
 }

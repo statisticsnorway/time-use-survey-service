@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class SearchRequest {
     String telephone;
     String email;
+    String name;
     Long ioNumber;
 }

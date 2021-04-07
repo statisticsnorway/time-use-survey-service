@@ -24,7 +24,7 @@ public class AppointmentResponse {
     String createdBy;
 
     public static AppointmentResponse map(Appointment from) {
-        log.info("appointment: {}", from);
+//        log.info("appointment: {}", from);
         return new AppointmentResponse(
                 from.getId(),
                 from.getRespondent().getRespondentId(),
