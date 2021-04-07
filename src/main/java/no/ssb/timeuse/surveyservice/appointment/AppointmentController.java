@@ -43,7 +43,7 @@ public class AppointmentController {
     public List<AppointmentResponse> entries(@RequestParam(required = false) Optional<Long> ioNumber,
                                              @RequestParam(required = false) Optional<UUID> respondentId,
                                              @RequestParam(required = false) Optional<String> assignedTo) {
-        log.info("ioNumber: {}, respondentId: {}, assignedTo: {}", ioNumber, respondentId, assignedTo);
+        log.info("ioNumber: {}, respondentId: {}, assignedTo: {}", ioNumber.isPresent(), respondentId.isPresent(), assignedTo.isPresent());
        if (respondentId.isPresent()) {
             return repository.findByRespondentRespondentId(respondentId.get())
                     .stream()
