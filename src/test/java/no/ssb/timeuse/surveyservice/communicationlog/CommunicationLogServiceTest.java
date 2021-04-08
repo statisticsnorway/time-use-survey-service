@@ -85,6 +85,8 @@ public class CommunicationLogServiceTest {
         return respondentIds.stream()
                 .map(requested -> Respondent.builder()
                         .respondentId(requested)
+                        .name("testname")
+//                        .email("testmail")
                         .build())
                 .collect(Collectors.toList());
     }

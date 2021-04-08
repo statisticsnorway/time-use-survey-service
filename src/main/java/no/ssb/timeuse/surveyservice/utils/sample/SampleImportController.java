@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @Slf4j
 @AllArgsConstructor
-@RequestMapping("/v1/sample_import")
+@RequestMapping("/v1/sample-import")
 public class SampleImportController {
 
     RespondentRepository respondentRepository;
