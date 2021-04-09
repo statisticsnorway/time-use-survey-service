@@ -30,21 +30,22 @@ public class RespondentSearchRepositoryImpl implements RespondentSearchRepositor
         CriteriaQuery<Respondent> cq = cb.createQuery(Respondent.class);
         Root<Respondent> root = cq.from(Respondent.class);
         Predicate andPredicate = buildAndPredicates(groupRequest.getPredicates(), cb, root);
-        Predicate withInterval = applyTimeInterval(andPredicate, groupRequest.getFrom(), groupRequest.getTo(), cb, root);
+        Predicate withInterval = applyTimeInterval(andPredicate,
+                groupRequest.getDiaryStartFrom(), groupRequest.getDiaryStartTo(), cb, root);
         Predicate withAppointmentFilter = filterAwayAppointments(cb, cq, root);
         return manager.createQuery(cq.where(withInterval, withAppointmentFilter)).getResultList();
     }
 
     private Predicate buildAndPredicates(Map<String, List<String>> predicateMap, CriteriaBuilder cb, Root<Respondent> root) {
         List<Predicate> andPredicates = predicateMap.entrySet().stream().map(entry ->  buildOrPredicate(entry.getKey(), entry.getValue(), cb, root)).collect(Collectors.toList());
-        if(andPredicates.size() > 1) return cb.and(andPredicates.toArray(Predicate[]::new));
+        if (andPredicates.size() > 1) return cb.and(andPredicates.toArray(Predicate[]::new));
         else if(andPredicates.size() == 1) return andPredicates.get(0);
         else return null;
     }
 
     private Predicate buildOrPredicate(String fieldName, List<String> orList, CriteriaBuilder cb, Root<Respondent> root) {
         List<Predicate> orPredicates = orList.stream().map(orValue -> cb.equal(root.get(fieldName), orValue)).collect(Collectors.toList());
-        if(orPredicates.size() > 1) return cb.or(orPredicates.toArray(Predicate[]::new));
+        if (orPredicates.size() > 1) return cb.or(orPredicates.toArray(Predicate[]::new));
         else if (orPredicates.size() == 1) return orPredicates.get(0);
         else return null;
     }

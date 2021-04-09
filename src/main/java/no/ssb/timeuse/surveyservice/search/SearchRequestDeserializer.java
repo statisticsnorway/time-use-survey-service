@@ -7,14 +7,17 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class SearchRequestDeserializer extends StdDeserializer<no.ssb.timeuse.surveyservice.search.SearchRequestGroup> {
 
     public SearchRequestDeserializer() {
@@ -36,9 +39,10 @@ public class SearchRequestDeserializer extends StdDeserializer<no.ssb.timeuse.su
     @Override
     public no.ssb.timeuse.surveyservice.search.SearchRequestGroup deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode rootNode = jsonParser.getCodec().readTree(jsonParser);
+        log.info("parse json: {}", rootNode);
          return no.ssb.timeuse.surveyservice.search.SearchRequestGroup.builder().predicates(buildPredicateMap(rootNode))
-                .from(rootNode.get("from") != null ? LocalDate.parse(rootNode.get("from").asText()) : null)
-                .to(rootNode.get("to") != null ? LocalDate.parse(rootNode.get("to").asText()) : null)
+                .diaryStartFrom(rootNode.get("diaryStartFrom") != null ? LocalDate.parse(rootNode.get("diaryStartFrom").asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null)
+                .diaryStartTo(rootNode.get("diaryStartTo") != null ? LocalDate.parse(rootNode.get("diaryStartTo").asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null)
                 .build();
     }
 
@@ -47,7 +51,7 @@ public class SearchRequestDeserializer extends StdDeserializer<no.ssb.timeuse.su
 
         node.fieldNames().forEachRemaining( (field) -> {
 
-            if(!field.equals("from") && !field.equals("to")) {
+            if(!field.equals("diaryStartFrom") && !field.equals("diaryStartTo")) {
                 ArrayNode orNode = node.withArray(field);
                 List<String> values = new ArrayList<>();
 

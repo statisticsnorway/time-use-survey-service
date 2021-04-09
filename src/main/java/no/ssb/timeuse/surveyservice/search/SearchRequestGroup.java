@@ -17,6 +17,6 @@ import java.util.Map;
 @JsonDeserialize(using = SearchRequestDeserializer.class)
 public class SearchRequestGroup {
     Map<String, List<String>> predicates;
-    LocalDate from;
-    LocalDate to;
+    LocalDate diaryStartFrom;
+    LocalDate diaryStartTo;
 }
