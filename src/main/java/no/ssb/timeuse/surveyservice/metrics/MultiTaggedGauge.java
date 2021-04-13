@@ -67,4 +67,8 @@ public class MultiTaggedGauge {
             number.setValue(value);
         }
     }
+
+    public void resetValues() {
+        gaugeValues.forEach((k, v) -> v.setValue(0));
+    }
 }
