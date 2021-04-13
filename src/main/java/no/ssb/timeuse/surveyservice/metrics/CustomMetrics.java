@@ -17,8 +17,6 @@ public class CustomMetrics {
 
     private final ActivityCategoryMetrics activityCategoryMetrics;
     private final CommunicationLogMetrics communicationLogMetrics;
-//    private final ItemMetrics itemMetrics;
-//    private final PurchaseMetrics purchaseMetrics;
     private final RespondentMetrics respondentMetrics;
     private final SearchTermMetrics searchTermMetrics;
     private final AppointmentMetrics appointmentMetrics;
@@ -28,8 +26,6 @@ public class CustomMetrics {
 
         activityCategoryMetrics.generateMetrics();
         communicationLogMetrics.generateMetrics();
-//        itemMetrics.generateMetrics();
-//        purchaseMetrics.generateMetrics();
         searchTermMetrics.generateMetrics();
         appointmentMetrics.generateMetrics();
         respondentMetrics.generateMetrics();

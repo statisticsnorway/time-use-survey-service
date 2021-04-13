@@ -25,21 +25,9 @@ public interface RespondentRepository extends JpaRepository<Respondent, Long>, R
     List<Respondent> findAllByNameContainingIgnoreCase(String name);
 
 
-    @Query("select h.statusSurvey, h.diaryStart, h.region, count(h) " +
-            "from Respondent h group by h.statusSurvey, h.diaryStart, h.region")
-    List<Object[]> getNumberOfRespondentsPerStatusSurvey();
-
-    @Query("select h.statusRecruitment, h.diaryStart, h.region, count(h) " +
-            "from Respondent h group by h.statusRecruitment, h.diaryStart, h.region")
-    List<Object[]> getNumberOfRespondentsPerStatusRecruitment();
-
-    @Query("select h.statusDiary, h.diaryStart, h.region, count(h) " +
-            "from Respondent h group by h.statusDiary, h.diaryStart, h.region")
-    List<Object[]> getNumberOfRespondentsPerStatusDiary();
-
-    @Query("select h.statusQuestionnaire, h.diaryStart, h.region, count(h) " +
-            "from Respondent h group by h.statusQuestionnaire, h.diaryStart, h.region")
-    List<Object[]> getNumberOfRespondentsPerStatusQuestionnaire();
-
+    @Query("select r.diaryStart as diaryStart, r.statusDiary as statusDiary, r.statusSurvey as statusSurvey, "
+            + "r.statusRecruitment as statusRecruitment, r.statusQuestionnaire as statusQuestionnaire, count(r) as total "
+            + "from Respondent r group by r.diaryStart, r.statusDiary, r.statusSurvey, r.statusRecruitment, r.statusQuestionnaire")
+    List<RespondentMetricsStatusCount> getNumberOfRespondentsPerStatus();
 
 }
