@@ -53,4 +53,9 @@ public class TaggedGauge {
             number.setValue(value);
         }
     }
+
+    public void resetValues() {
+        gaugeValues.forEach((k, v) -> v.setValue(0));
+    }
+
 }
