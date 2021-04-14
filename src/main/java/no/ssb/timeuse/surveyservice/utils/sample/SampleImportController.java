@@ -80,8 +80,10 @@ public class SampleImportController {
     public void validateSampleImport(SampleImport request) {
         try {
             Long.parseLong(request.getIoNumber());
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyyMMdd]");
             LocalDate.parse(request.getDateOfBirth(), dateTimeFormatter);
+            LocalDate.parse(request.getDiaryStart(), dateTimeFormatter);
+            LocalDate.parse(request.getDiaryEnd(), dateTimeFormatter);
         } catch (Exception e) {
             throw new ResourceValidationException("SampleImport with ioNumber " + request.getIoNumber() + " is invalid");
         }

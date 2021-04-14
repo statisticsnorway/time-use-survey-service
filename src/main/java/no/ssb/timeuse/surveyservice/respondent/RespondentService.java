@@ -32,7 +32,7 @@ public class RespondentService {
                 .ioNumber(request.getIoNumber())
                 .phone(request.getPhone())
                 .email(request.getEmail())
-                .dateOfBirth(LocalDate.parse(request.getDateOfBirth(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .dateOfBirth(LocalDate.parse(request.getDateOfBirth(), DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyyMMdd]")))
                 .age(request.getAge())
                 .gender(request.getGender())
                 .education(request.getEducation())
@@ -68,7 +68,7 @@ public class RespondentService {
                 .name(request.getName())
                 .phone(request.getPhone())
                 .email(request.getEmail())
-                .dateOfBirth(LocalDate.parse(request.getDateOfBirth(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .dateOfBirth(LocalDate.parse(request.getDateOfBirth(), DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyyMMdd]")))
                 .age(request.getAge())
                 .gender(request.getGender())
                 .education(request.getEducation())
@@ -82,8 +82,8 @@ public class RespondentService {
                 .statusQuestionnaire(request.getStatusQuestionnaire())
                 .statusDiary(request.getStatusDiary())
                 .statusSurvey(request.getStatusSurvey())
-                .diaryStart(LocalDate.parse(request.getDiaryStart(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                .diaryEnd(LocalDate.parse(request.getDiaryEnd(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .diaryStart(LocalDate.parse(request.getDiaryStart(), DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyyMMdd]")))
+                .diaryEnd(LocalDate.parse(request.getDiaryEnd(), DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyyMMdd]")))
                 .build();
     }
 
