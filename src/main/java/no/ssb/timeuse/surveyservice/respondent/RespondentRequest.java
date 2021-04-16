@@ -28,6 +28,7 @@ public class RespondentRequest {
     private String region;
     private String municipalityNumber;
     private String dwellingNumber;
+    private UUID interviewerId;
 
     private LocalDate diaryStart;
     private LocalDate diaryEnd;

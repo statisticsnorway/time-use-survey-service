@@ -20,7 +20,7 @@ public class AppointmentRequest {
     private UUID respondentId;
     private LocalDateTime appointmentTime;
     private String description;
-    private String assignedTo;
+    private UUID interviewerId;
     private String createdBy;
-
+    private LocalDateTime createdTime;
 }

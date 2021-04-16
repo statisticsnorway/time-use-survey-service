@@ -6,6 +6,8 @@ import lombok.val;
 import no.ssb.timeuse.surveyservice.activitiy.ActivityCategory;
 import no.ssb.timeuse.surveyservice.activitiy.ActivityCategoryRepository;
 import no.ssb.timeuse.surveyservice.exception.ResourceValidationException;
+import no.ssb.timeuse.surveyservice.interviewer.InterviewerRepository;
+import no.ssb.timeuse.surveyservice.interviewer.InterviewerService;
 import no.ssb.timeuse.surveyservice.respondent.RespondentRepository;
 import no.ssb.timeuse.surveyservice.respondent.RespondentService;
 import no.ssb.timeuse.surveyservice.respondent.idmapper.RespondentIdMapperRepository;
@@ -34,6 +36,9 @@ public class SampleImportController {
     RespondentIdMapperRepository respondentIdMapperRepository;
     RespondentIdMapperService respondentIdMapperService;
     ActivityCategoryRepository activityCategoryRepository;
+
+    InterviewerRepository interviewerRepository;
+    InterviewerService interviewerService;
 
     @PostMapping
     public void importRespondents(@RequestBody List<SampleImport> from) {
@@ -93,5 +98,26 @@ public class SampleImportController {
     public void importActivityCategories(@RequestBody List<ActivityCategory> activityCategories) {
         List<ActivityCategory> res = activityCategoryRepository.saveAll(activityCategories);
     }
+
+
+    @PostMapping("/importInterviewers")
+    public void importInterviewers(@RequestBody List<SampleImportInterviewer> from) {
+
+        // First do some validation and manipulation.
+        List<SampleImportInterviewer> updatedFrom = from;
+        updatedFrom.stream().forEach(r -> {
+            r.setNewUUID(UUID.randomUUID());
+        });
+
+        // Create Respondent
+        val newInterviewers = updatedFrom.stream()
+                .map(r -> interviewerService.mapToInterviewerFromSample(r))
+                .collect(Collectors.toList());
+
+        interviewerRepository.saveAll(newInterviewers);
+        log.info("Interviewers imported: " + newInterviewers.size());
+
+    }
+
 
 }

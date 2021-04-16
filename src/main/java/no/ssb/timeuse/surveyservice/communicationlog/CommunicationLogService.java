@@ -43,6 +43,7 @@ public class CommunicationLogService {
                     .category(request.getCategory())
                     .message(buildMessage(respondent, matcher))
                     .createdBy(request.getCreatedBy())
+                    .createdTime(request.getCreatedTime())
                     .scheduled(request.getScheduled())
                     .communicationTriggered(LocalDateTime.now())
                     .build()

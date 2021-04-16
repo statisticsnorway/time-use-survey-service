@@ -25,6 +25,7 @@ public class CommunicationLogEntryRequest {
     private String message;
     private Set<UUID> respondentId;
     private String createdBy;
+    private LocalDateTime createdTime;
     private LocalDateTime scheduled;
 
 }
