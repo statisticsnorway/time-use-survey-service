@@ -36,7 +36,6 @@ public class RespondentSearchRepositoryImpl implements RespondentSearchRepositor
         Predicate withInterval = applyTimeInterval(andPredicate,
                 groupRequest.getDiaryStartFrom(), groupRequest.getDiaryStartTo(), cb, root);
         Predicate withAppointmentFilter = filterAwayAppointments(cb, cq, root);
-        TypedQuery<Respondent> query = manager.createQuery(cq.where(withInterval, withAppointmentFilter));
         return manager.createQuery(cq.where(withInterval, withAppointmentFilter)).setMaxResults(groupRequest.getMaxResults()).getResultList();
     }
 
