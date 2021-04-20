@@ -119,12 +119,12 @@ public class AppointmentController {
 
     final Appointment convertToAppointment(Optional<Long> id, AppointmentRequest request) {
         val respondent = respondentRepository.findByRespondentId(request.getRespondentId());
-        val interviewer = interviewerRepository.findByInterviewerId(request.getInterviewerId());
+        val interviewer = request.getInterviewerId() != null ? interviewerRepository.findByInterviewerId(request.getInterviewerId()) : null;
 
         Appointment appointment = Appointment.builder()
                 .respondent(respondent.get())
                 .appointmentTime(request.getAppointmentTime())
-                .interviewer(interviewer.get())
+                .interviewer(interviewer != null ? interviewer.get() : null)
                 .createdBy(request.getCreatedBy())
                 .description(request.getDescription())
                 .build();

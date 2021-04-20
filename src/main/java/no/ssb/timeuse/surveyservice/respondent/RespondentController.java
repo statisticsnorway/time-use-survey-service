@@ -39,6 +39,7 @@ public class RespondentController {
 
     @GetMapping("{respondentId}")
     public RespondentResponse findRespondentByRespondentId(@PathVariable UUID respondentId) {
+        log.info("get respondent with respondentId {}", respondentId);
         return repository.findByRespondentId(respondentId)
                 .map(r -> RespondentResponse.map(r))
                 .orElseThrow(() -> new ResourceNotFoundException("Respondent with respondentId " + respondentId + " does not exist"));
@@ -54,7 +55,7 @@ public class RespondentController {
     }
 
 
-    @GetMapping("/io/{ioNumber}")
+    @GetMapping("/respondent/{ioNumber}")
     public RespondentResponse getByIoNumber(@PathVariable Long ioNumber) {
         return repository.findByIoNumber(ioNumber).map(RespondentResponse::map).
                 orElseThrow(() -> new ResourceNotFoundException("Respondent with IO-number " + ioNumber + " does not exist"));

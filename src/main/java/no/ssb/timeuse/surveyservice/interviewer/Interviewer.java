@@ -54,5 +54,16 @@ public class Interviewer {
     @OneToMany(mappedBy = "interviewer", cascade = CascadeType.ALL)
     private List<Appointment> appointments;
 
-
+    @Override
+    public String toString() {
+        return "Interviewer{" +
+                "id=" + id +
+                ", interviewerId=" + interviewerId +
+                ", initials='" + initials + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+//                ", respondents=" + (respondents != null ? respondents.size() : 0) +
+//                ", appointments=" + (appointments != null ? appointments.size() : 0) +
+                '}';
+    }
 }

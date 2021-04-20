@@ -116,7 +116,7 @@ public class Respondent {
     @Column(name = "ACCEPTED_INITIAL_DIARY_START")
     private Boolean acceptedInitialDiaryStart;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne//(fetch = FetchType.EAGER)
     @JoinColumn(name = "INTERVIEWER_ID")
     private Interviewer interviewer;
 

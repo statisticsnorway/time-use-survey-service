@@ -48,8 +48,8 @@ public class SampleImportController {
         updatedFrom.stream().forEach(r -> {
             validateSampleImport(r);
             r.setNewUUID(UUID.randomUUID());
-            if (!r.getCareOfAddress().isEmpty()) {
-                if (!r.getAddress().isEmpty()) {
+            if (r.getCareOfAddress() != null && !r.getCareOfAddress().isEmpty()) {
+                if (r.getAddress() != null && !r.getAddress().isEmpty()) {
                     r.setAddress(r.getCareOfAddress() + ", " + r.getAddress());
                 }
                 else {

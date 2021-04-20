@@ -7,6 +7,7 @@ import no.ssb.timeuse.surveyservice.respondent.Respondent;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -14,6 +15,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,19 +30,22 @@ public class RespondentSearchRepositoryImpl implements RespondentSearchRepositor
     public List<Respondent> searchForRespondents(SearchRequestGroup groupRequest) {
         CriteriaBuilder cb = manager.getCriteriaBuilder();
         CriteriaQuery<Respondent> cq = cb.createQuery(Respondent.class);
+
         Root<Respondent> root = cq.from(Respondent.class);
         Predicate andPredicate = buildAndPredicates(groupRequest.getPredicates(), cb, root);
         Predicate withInterval = applyTimeInterval(andPredicate,
                 groupRequest.getDiaryStartFrom(), groupRequest.getDiaryStartTo(), cb, root);
         Predicate withAppointmentFilter = filterAwayAppointments(cb, cq, root);
-        return manager.createQuery(cq.where(withInterval, withAppointmentFilter)).getResultList();
+        TypedQuery<Respondent> query = manager.createQuery(cq.where(withInterval, withAppointmentFilter));
+        return manager.createQuery(cq.where(withInterval, withAppointmentFilter)).setMaxResults(groupRequest.getMaxResults()).getResultList();
     }
 
     private Predicate buildAndPredicates(Map<String, List<String>> predicateMap, CriteriaBuilder cb, Root<Respondent> root) {
+        Arrays.asList(predicateMap).forEach(p -> log.info("predicate in map: {}", p));
         List<Predicate> andPredicates = predicateMap.entrySet().stream().map(entry ->  buildOrPredicate(entry.getKey(), entry.getValue(), cb, root)).collect(Collectors.toList());
         if (andPredicates.size() > 1) return cb.and(andPredicates.toArray(Predicate[]::new));
         else if(andPredicates.size() == 1) return andPredicates.get(0);
-        else return null;
+        else return cb.isNotNull(root.get("respondentId")); //defaultpredicate to avoid null-pointer
     }
 
     private Predicate buildOrPredicate(String fieldName, List<String> orList, CriteriaBuilder cb, Root<Respondent> root) {
@@ -51,12 +56,13 @@ public class RespondentSearchRepositoryImpl implements RespondentSearchRepositor
     }
 
     private Predicate applyTimeInterval(Predicate fieldPredicate, LocalDate from, LocalDate to, CriteriaBuilder cb, Root<Respondent> root) {
-        if(from != null) {
-            if(to != null) {
-                return cb.and(fieldPredicate, cb.between(root.get("diaryStart"), from, to));
-            }
-        }
-        return fieldPredicate;
+        return cb.and(fieldPredicate,
+                (from != null && to != null ? cb.between(root.get("diaryStart"), from, to) :
+                        (from != null && to == null ? cb.greaterThanOrEqualTo(root.get("diaryStart"), from) :
+                                (to != null ? cb.lessThanOrEqualTo(root.get("diaryStart"), to) : null)
+                        )
+                )
+        );
     }
 
     private Predicate filterAwayAppointments(CriteriaBuilder cb, CriteriaQuery<Respondent> cq, Root<Respondent> root) {
