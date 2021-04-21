@@ -20,8 +20,10 @@ public class AppointmentResponse {
     String name;
     LocalDateTime appointmentTime;
     String description;
-    String assignedTo;
+    UUID interviewerId;
+    String interviewerName;
     String createdBy;
+    LocalDateTime createdTime;
 
     public static AppointmentResponse map(Appointment from) {
         log.info("appointment.respondentId: {}", from.getRespondent().getRespondentId());
@@ -31,8 +33,11 @@ public class AppointmentResponse {
                 from.getRespondent().getName(),
                 from.getAppointmentTime(),
                 from.getDescription(),
-                from.getAssignedTo(),
-                from.getCreatedBy());
+                from.getInterviewer() != null ? from.getInterviewer().getInterviewerId() : null,
+                from.getInterviewer() != null ? from.getInterviewer().getName() : null,
+                from.getCreatedBy(),
+                from.getCreatedTime());
+
     }
 
 

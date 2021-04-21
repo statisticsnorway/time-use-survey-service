@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import no.ssb.timeuse.surveyservice.exception.ResourceNotFoundException;
 import no.ssb.timeuse.surveyservice.exception.ResourceValidationException;
+import no.ssb.timeuse.surveyservice.interviewer.InterviewerRepository;
 import no.ssb.timeuse.surveyservice.respondent.RespondentRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @AllArgsConstructor
@@ -35,15 +37,15 @@ public class AppointmentController {
     private final AppointmentRepository repository;
     private final AppointmentService service;
     private final RespondentRepository respondentRepository;
+    private final InterviewerRepository interviewerRepository;
 
 
 
-    @CrossOrigin
     @GetMapping
     public List<AppointmentResponse> entries(@RequestParam(required = false) Optional<Long> ioNumber,
                                              @RequestParam(required = false) Optional<UUID> respondentId,
-                                             @RequestParam(required = false) Optional<String> assignedTo) {
-        log.info("ioNumber: {}, respondentId: {}, assignedTo: {}", ioNumber.isPresent(), respondentId.isPresent(), assignedTo.isPresent());
+                                             @RequestParam(required = false) Optional<UUID> interviewerId) {
+        log.info("ioNumber: {}, respondentId: {}, interviewerId: {}", ioNumber.isPresent(), respondentId.isPresent(), interviewerId.isPresent());
        if (respondentId.isPresent()) {
             return repository.findByRespondentRespondentId(respondentId.get())
                     .stream()
@@ -56,8 +58,8 @@ public class AppointmentController {
                     .map(r -> AppointmentResponse.map(r))
                     .collect(Collectors.toList());
         }
-        if (assignedTo.isPresent()) {
-            return repository.findByAssignedTo(assignedTo.get())
+        if (interviewerId.isPresent()) {
+            return repository.findByInterviewerInterviewerId(interviewerId.get())
                     .stream()
                     .map(r -> AppointmentResponse.map(r))
                     .collect(Collectors.toList());
@@ -68,9 +70,6 @@ public class AppointmentController {
                 .collect(Collectors.toList());
     }
 
-
-
-    @CrossOrigin
     @GetMapping("/{id}")
     public AppointmentResponse appointmentById(@PathVariable Long id) {
         return repository.findById(id)
@@ -80,7 +79,6 @@ public class AppointmentController {
 
 
 
-    @CrossOrigin
     @DeleteMapping("/{id}")
     public void deleteAppointment(@PathVariable Long id) {
         if (repository.findById(id).isPresent()) {
@@ -90,8 +88,6 @@ public class AppointmentController {
         }
     }
 
-
-    @CrossOrigin
     @PutMapping("/{id}")
     public ResponseEntity<AppointmentResponse> updateAppointment(@PathVariable(value = "id") Long id, @RequestBody AppointmentRequest request) {
         if (repository.findById(id).isEmpty()) {
@@ -103,8 +99,6 @@ public class AppointmentController {
         return new ResponseEntity<>(AppointmentResponse.map(repository.save(convertToAppointment(Optional.of(id), request))), HttpStatus.OK);
     }
 
-
-    @CrossOrigin
     @PostMapping
     public ResponseEntity<?> createNewAppointment(@RequestBody AppointmentRequest request) {
         log.info("request: {}", request.toString());
@@ -117,11 +111,12 @@ public class AppointmentController {
 
     final Appointment convertToAppointment(Optional<Long> id, AppointmentRequest request) {
         val respondent = respondentRepository.findByRespondentId(request.getRespondentId());
+        val interviewer = request.getInterviewerId() != null ? interviewerRepository.findByInterviewerId(request.getInterviewerId()) : null;
 
         Appointment appointment = Appointment.builder()
                 .respondent(respondent.get())
                 .appointmentTime(request.getAppointmentTime())
-                .assignedTo(request.getAssignedTo())
+                .interviewer(interviewer != null ? interviewer.get() : null)
                 .createdBy(request.getCreatedBy())
                 .description(request.getDescription())
                 .build();

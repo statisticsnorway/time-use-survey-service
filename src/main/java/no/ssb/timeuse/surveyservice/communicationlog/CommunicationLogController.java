@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 @AllArgsConstructor
 @Timed
@@ -28,7 +29,6 @@ public class CommunicationLogController {
     private final CommunicationLogService service;
     private final ContactIoConsumer consumer;
 
-    @CrossOrigin
     @GetMapping
     public List<CommunicationLogEntryResponse> entries(@RequestParam (required = false) Optional<UUID> respondentId) {
         if(respondentId.isPresent()) {
@@ -40,7 +40,6 @@ public class CommunicationLogController {
         }
     }
 
-    @CrossOrigin
     @PostMapping
     public List<CommunicationLogEntryResponse> createNewCommunicationLogs(@RequestBody CommunicationLogEntryRequest communicationLogEntryRequest) {
         log.info("communicationLogEntryRequest: {}", communicationLogEntryRequest);

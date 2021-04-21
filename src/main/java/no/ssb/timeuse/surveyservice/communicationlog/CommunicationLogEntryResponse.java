@@ -22,6 +22,7 @@ public class CommunicationLogEntryResponse {
     final Category category;
     final String message;
     final String createdBy;
+    final LocalDateTime createdTime;
     final LocalDateTime scheduled;
     final UUID respondentId;
     final String respondentPhoneNumber;
@@ -38,6 +39,7 @@ public class CommunicationLogEntryResponse {
                 from.getCategory(),
                 from.getMessage(),
                 from.getCreatedBy(),
+                from.getCreatedTime(),
                 from.getScheduled(),
                 from.getRespondent().getRespondentId(),
                 from.getRespondent().getPhone(),

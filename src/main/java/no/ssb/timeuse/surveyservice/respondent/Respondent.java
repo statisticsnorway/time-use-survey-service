@@ -6,13 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import no.ssb.timeuse.surveyservice.appointment.Appointment;
 import no.ssb.timeuse.surveyservice.communicationlog.CommunicationLogEntry;
+import no.ssb.timeuse.surveyservice.interviewer.Interviewer;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -112,7 +116,9 @@ public class Respondent {
     @Column(name = "ACCEPTED_INITIAL_DIARY_START")
     private Boolean acceptedInitialDiaryStart;
 
-
+    @ManyToOne//(fetch = FetchType.EAGER)
+    @JoinColumn(name = "INTERVIEWER_ID")
+    private Interviewer interviewer;
 
     @OneToMany(mappedBy = "respondent", cascade = CascadeType.ALL)
     private List<CommunicationLogEntry> communicationLogs;

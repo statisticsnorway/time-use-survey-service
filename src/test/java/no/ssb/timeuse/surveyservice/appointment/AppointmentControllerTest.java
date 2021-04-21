@@ -1,8 +1,9 @@
 package no.ssb.timeuse.surveyservice.appointment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import no.ssb.timeuse.surveyservice.appointment.*;
+import no.ssb.timeuse.surveyservice.interviewer.Interviewer;
 import no.ssb.timeuse.surveyservice.respondent.RespondentRepository;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -39,18 +40,27 @@ public class AppointmentControllerTest {
 
     private JacksonTester<AppointmentRequest> appointmentJson;
 
+    private static final UUID uuid = UUID.randomUUID();
+    private static final Interviewer interviewer = Interviewer.builder()
+            .interviewerId(uuid)
+            .initials("VAD")
+            .id(1L)
+            .name("Darth Vader")
+            .phone("987654321")
+            .build();
+
     public static final Appointment appointment = Appointment.builder()
             .id(1L)
             .appointmentTime(LocalDateTime.now())
             .createdBy("Obi-Wan Kenobi")
-            .assignedTo("Darth Wader")
+            .interviewer(interviewer)
             .description("Final battle")
             .build();
 
     public static final AppointmentRequest appointmentRequest = AppointmentRequest.builder()
             .appointmentTime(LocalDateTime.now())
             .createdBy("Obi-Wan Kenobi")
-            .assignedTo("Darth Wader")
+            .interviewerId(uuid)
             .description("Final battle")
             .build();
 

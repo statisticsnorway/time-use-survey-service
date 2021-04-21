@@ -41,8 +41,10 @@ public class SearchRequestDeserializer extends StdDeserializer<no.ssb.timeuse.su
         JsonNode rootNode = jsonParser.getCodec().readTree(jsonParser);
         log.info("parse json: {}", rootNode);
          return no.ssb.timeuse.surveyservice.search.SearchRequestGroup.builder().predicates(buildPredicateMap(rootNode))
-                .diaryStartFrom(rootNode.get("diaryStartFrom") != null ? LocalDate.parse(rootNode.get("diaryStartFrom").asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null)
-                .diaryStartTo(rootNode.get("diaryStartTo") != null ? LocalDate.parse(rootNode.get("diaryStartTo").asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null)
+                 .diaryStartFrom(rootNode.get("diaryStartFrom") != null ? LocalDate.parse(rootNode.get("diaryStartFrom").asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null)
+                 .diaryStartTo(rootNode.get("diaryStartTo") != null ? LocalDate.parse(rootNode.get("diaryStartTo").asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null)
+                 .maxResults(rootNode.get("maxResults") != null ? (rootNode.get("maxResults")).asInt() : 10000)
+
                 .build();
     }
 
@@ -51,7 +53,7 @@ public class SearchRequestDeserializer extends StdDeserializer<no.ssb.timeuse.su
 
         node.fieldNames().forEachRemaining( (field) -> {
 
-            if(!field.equals("diaryStartFrom") && !field.equals("diaryStartTo")) {
+            if(!field.equals("diaryStartFrom") && !field.equals("diaryStartTo") && !field.equals("maxResults")) {
                 ArrayNode orNode = node.withArray(field);
                 List<String> values = new ArrayList<>();
 

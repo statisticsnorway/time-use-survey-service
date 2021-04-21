@@ -19,4 +19,5 @@ public class SearchRequestGroup {
     Map<String, List<String>> predicates;
     LocalDate diaryStartFrom;
     LocalDate diaryStartTo;
+    int maxResults;
 }

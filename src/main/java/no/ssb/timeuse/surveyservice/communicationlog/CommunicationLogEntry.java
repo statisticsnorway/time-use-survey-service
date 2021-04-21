@@ -64,6 +64,9 @@ public class CommunicationLogEntry {
     @Column(name = "CREATED_BY")
     private String createdBy;
 
+    @Column(name = "CREATED_TIME")
+    private LocalDateTime createdTime;
+
     @Column(name = "SCHEDULED")
     private LocalDateTime scheduled;
 }

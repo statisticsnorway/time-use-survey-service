@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import no.ssb.timeuse.surveyservice.interviewer.Interviewer;
 import no.ssb.timeuse.surveyservice.respondent.Respondent;
 
 import javax.persistence.Column;
@@ -41,11 +42,15 @@ public class Appointment {
     @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-    @Column(name = "ASSIGNED_TO")
-    private String assignedTo;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "INTERVIEWER_ID")
+    private Interviewer interviewer;
 
     @Column(name = "CREATED_BY")
     private String createdBy;
+
+    @Column(name = "CREATED_TIME")
+    private LocalDateTime createdTime;
 
     @Override
     public String toString() {
@@ -54,8 +59,9 @@ public class Appointment {
                 ", respondentId=" + respondent.getRespondentId() +
                 ", appointmentTime=" + appointmentTime +
                 ", description='" + description + '\'' +
-                ", assignedTo='" + assignedTo + '\'' +
+                ", interviewerId='" + (interviewer != null ? interviewer.getInterviewerId() : null ) + '\'' +
                 ", createdBy='" + createdBy + '\'' +
+                ", createdTime='" + createdTime + '\'' +
                 '}';
     }
 }

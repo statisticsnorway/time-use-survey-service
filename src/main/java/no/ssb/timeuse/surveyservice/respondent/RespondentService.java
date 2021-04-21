@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.val;
 import no.ssb.timeuse.surveyservice.exception.ResourceNotFoundException;
 import no.ssb.timeuse.surveyservice.exception.ResourceValidationException;
+import no.ssb.timeuse.surveyservice.interviewer.InterviewerRepository;
 import no.ssb.timeuse.surveyservice.utils.sample.SampleImport;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class RespondentService {
 
     private final RespondentRepository repository;
+    private final InterviewerRepository interviewerRepository;
 
     public void validateRespondent(RespondentRequest request) {
         if (request.getName().isEmpty()) {
@@ -56,6 +58,16 @@ public class RespondentService {
             newRespondent.setRespondentId(existingRespondent.getRespondentId());
             newRespondent.setId(existingRespondent.getId());
             newRespondent.setAppointments(existingRespondent.getAppointments());
+            if (request.getInterviewerId() == null) {
+                newRespondent.setInterviewer(null);
+            } else if ( existingRespondent.getInterviewer() != null &&
+                    request.getInterviewerId().equals(existingRespondent.getInterviewer().getInterviewerId())) {
+                newRespondent.setInterviewer(existingRespondent.getInterviewer());
+            } else {
+                val newInterviewer = interviewerRepository.findByInterviewerId(request.getInterviewerId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Interviewer with interviewerId " + request.getInterviewerId() + " does not exist"));
+                newRespondent.setInterviewer(newInterviewer);
+            }
         }
         return newRespondent;
     }

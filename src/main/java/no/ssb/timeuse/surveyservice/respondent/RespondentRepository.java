@@ -18,6 +18,7 @@ public interface RespondentRepository extends JpaRepository<Respondent, Long>, R
     List<Respondent> findAllByRespondentIdIn(Set<UUID> respondentIds);
 
     void deleteById(Long id);
+    void deleteRespondentByRespondentId(UUID respondentId);
 
     void deleteAllByIdIn(List<Long> id);
     List<Respondent> findAllByPhoneIgnoreCase(String phone);

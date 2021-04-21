@@ -16,13 +16,13 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class RespondentResponse {
+    UUID respondentId;
     Long ioNumber;
     String name;
     String phone;
     String email;
     String gender;
     LocalDate dateOfBirth;
-    UUID respondentId;
     Integer age;
     String education;
     String address;
@@ -31,6 +31,9 @@ public class RespondentResponse {
     String region;
     String municipalityNumber;
     String dwellingNumber;
+    String interviewerId;
+    String interviewerName;
+    String interviewerInitials;
 
     LocalDate diaryStart;
     LocalDate diaryEnd;
@@ -60,6 +63,9 @@ public class RespondentResponse {
                 .region(from.getRegion())
                 .municipalityNumber(from.getMunicipalityNumber())
                 .dwellingNumber(from.getDwellingNumber())
+                .interviewerId(from.getInterviewer() != null ? from.getInterviewer().getInterviewerId().toString() : null)
+                .interviewerName(from.getInterviewer() != null ? from.getInterviewer().getName(): null)
+                .interviewerInitials(from.getInterviewer() != null ? from.getInterviewer().getInitials(): null)
                 .diaryStart(from.getDiaryStart())
                 .diaryEnd(from.getDiaryEnd())
                 .statusDiary(from.getStatusDiary())
