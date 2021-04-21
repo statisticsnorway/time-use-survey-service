@@ -26,6 +26,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @Slf4j
 @RestController
 @AllArgsConstructor
@@ -40,7 +41,6 @@ public class AppointmentController {
 
 
 
-    @CrossOrigin
     @GetMapping
     public List<AppointmentResponse> entries(@RequestParam(required = false) Optional<Long> ioNumber,
                                              @RequestParam(required = false) Optional<UUID> respondentId,
@@ -70,9 +70,6 @@ public class AppointmentController {
                 .collect(Collectors.toList());
     }
 
-
-
-    @CrossOrigin
     @GetMapping("/{id}")
     public AppointmentResponse appointmentById(@PathVariable Long id) {
         return repository.findById(id)
@@ -82,7 +79,6 @@ public class AppointmentController {
 
 
 
-    @CrossOrigin
     @DeleteMapping("/{id}")
     public void deleteAppointment(@PathVariable Long id) {
         if (repository.findById(id).isPresent()) {
@@ -92,8 +88,6 @@ public class AppointmentController {
         }
     }
 
-
-    @CrossOrigin
     @PutMapping("/{id}")
     public ResponseEntity<AppointmentResponse> updateAppointment(@PathVariable(value = "id") Long id, @RequestBody AppointmentRequest request) {
         if (repository.findById(id).isEmpty()) {
@@ -105,8 +99,6 @@ public class AppointmentController {
         return new ResponseEntity<>(AppointmentResponse.map(repository.save(convertToAppointment(Optional.of(id), request))), HttpStatus.OK);
     }
 
-
-    @CrossOrigin
     @PostMapping
     public ResponseEntity<?> createNewAppointment(@RequestBody AppointmentRequest request) {
         log.info("request: {}", request.toString());

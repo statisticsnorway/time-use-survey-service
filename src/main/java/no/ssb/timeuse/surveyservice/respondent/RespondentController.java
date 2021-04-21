@@ -5,7 +5,10 @@ import io.micrometer.core.annotation.Timed;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import no.ssb.timeuse.surveyservice.exception.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -59,6 +62,14 @@ public class RespondentController {
     public RespondentResponse getByIoNumber(@PathVariable Long ioNumber) {
         return repository.findByIoNumber(ioNumber).map(RespondentResponse::map).
                 orElseThrow(() -> new ResourceNotFoundException("Respondent with IO-number " + ioNumber + " does not exist"));
+    }
+
+    @DeleteMapping("{respondentId}")
+    public ResponseEntity<String> deleteRespondentByRespondentId(@PathVariable UUID respondentId) {
+        Respondent deleteRespondent = repository.findByRespondentId(respondentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Respondent (to be deleted) with respondentId " + respondentId + " does not exist"));
+        repository.deleteById(deleteRespondent.getId());
+        return new ResponseEntity<>("Respondent with respondentID " + respondentId + " deleted.", HttpStatus.OK);
     }
 
 }
