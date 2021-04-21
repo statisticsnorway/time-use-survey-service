@@ -34,6 +34,7 @@ public class RespondentResponse {
     String interviewerId;
     String interviewerName;
     String interviewerInitials;
+    String interviewerPhone;
 
     LocalDate diaryStart;
     LocalDate diaryEnd;
@@ -66,6 +67,7 @@ public class RespondentResponse {
                 .interviewerId(from.getInterviewer() != null ? from.getInterviewer().getInterviewerId().toString() : null)
                 .interviewerName(from.getInterviewer() != null ? from.getInterviewer().getName(): null)
                 .interviewerInitials(from.getInterviewer() != null ? from.getInterviewer().getInitials(): null)
+                .interviewerPhone(from.getInterviewer() != null ? from.getInterviewer().getPhone(): null)
                 .diaryStart(from.getDiaryStart())
                 .diaryEnd(from.getDiaryEnd())
                 .statusDiary(from.getStatusDiary())
