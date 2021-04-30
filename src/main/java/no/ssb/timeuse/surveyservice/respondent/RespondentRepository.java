@@ -31,4 +31,23 @@ public interface RespondentRepository extends JpaRepository<Respondent, Long>, R
             + "from Respondent r group by r.diaryStart, r.statusDiary, r.statusSurvey, r.statusRecruitment, r.statusQuestionnaire")
     List<RespondentMetricsStatusCount> getNumberOfRespondentsPerStatus();
 
+
+    // from forbruk 30.04.2020
+    @Query("select r.statusSurvey as status, r.diaryStart as diaryStart, r.region as region as respondentType, r.respondentSize as respondentSize, count(h) as total "
+            + "from Respondent r group by r.statusSurvey, r.diaryStart, r.region")
+    List<MetricsCountStatusByDiaryStart> getNumberOfRespondentsPerStatusSurvey();
+
+    @Query("select r.statusRecruitment as status, r.diaryStart as diaryStart, r.region as region as respondentType, r.respondentSize as respondentSize, count(h) as total "
+            + "from Respondent r group by r.statusRecruitment, r.diaryStart, r.region")
+    List<MetricsCountStatusByDiaryStart> getNumberOfRespondentsPerStatusRecruitment();
+
+    @Query("select r.statusDiary as status, r.diaryStart as diaryStart, r.region as region as respondentType, r.respondentSize as respondentSize, count(h) as total "
+            + "from Respondent r group by r.statusDiary, r.diaryStart, r.region")
+    List<MetricsCountStatusByDiaryStart> getNumberOfRespondentsPerStatusDiary();
+
+    @Query("select r.statusQuestionnaire as status, r.diaryStart as diaryStart, r.region as region as respondentType, r.respondentSize as respondentSize, count(h) as total "
+            + "from Respondent r group by r.statusQuestionnaire, r.diaryStart, r.region")
+    List<MetricsCountStatusByDiaryStart> getNumberOfRespondentsPerStatusQuestionnaire();
+
+
 }

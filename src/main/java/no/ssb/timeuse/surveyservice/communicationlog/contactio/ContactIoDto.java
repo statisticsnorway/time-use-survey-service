@@ -12,7 +12,7 @@ import lombok.Setter;
 public class ContactIoDto {
     private String requestId;
     private String type;
-    private String from;
+    private String replyTo;
     private String to;
     private String subject;
     private String message;
