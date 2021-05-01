@@ -5,15 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import no.ssb.timeuse.surveyservice.codelist.CodeList;
 import no.ssb.timeuse.surveyservice.metrics.MultiTaggedGauge;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.temporal.TemporalField;
-import java.time.temporal.WeekFields;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -40,10 +35,10 @@ public class RespondentMetrics {
         this.respondentRepository = respondentRepository;
         this.meterRegistry = meterRegistry;
         gaugeTotal = meterRegistry.gauge(METRICS_PREFIX + "total", new AtomicInteger(0));
-        mtgStatusSurvey = new MultiTaggedGauge(METRICS_PREFIX+"status.survey", meterRegistry, "status", "diary-start", "diary-start-week", "region");
-        mtgStatusRecruitment = new MultiTaggedGauge(METRICS_PREFIX+"status.recruitment", meterRegistry, "status", "diary-start", "diary-start-week", "region");
-        mtgStatusDiary = new MultiTaggedGauge(METRICS_PREFIX+"status.diary", meterRegistry, "status", "diary-start", "diary-start-week", "region");
-        mtgStatusQuestionnaire = new MultiTaggedGauge(METRICS_PREFIX+"status.questionnaire", meterRegistry, "status", "diary-start", "diary-start-week", "region");
+        mtgStatusSurvey = new MultiTaggedGauge(METRICS_PREFIX+"status.survey", meterRegistry, "status", "diary-start", "region");
+        mtgStatusRecruitment = new MultiTaggedGauge(METRICS_PREFIX+"status.recruitment", meterRegistry, "status", "diary-start", "region");
+        mtgStatusDiary = new MultiTaggedGauge(METRICS_PREFIX+"status.diary", meterRegistry, "status", "diary-start", "region");
+        mtgStatusQuestionnaire = new MultiTaggedGauge(METRICS_PREFIX+"status.questionnaire", meterRegistry, "status", "diary-start", "region");
         mtgDiaryStart = new MultiTaggedGauge(METRICS_PREFIX+"status.diaryStart", meterRegistry, "status", "diaryStart", "region");
     }
 
