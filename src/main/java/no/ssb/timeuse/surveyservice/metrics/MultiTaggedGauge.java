@@ -4,6 +4,7 @@ import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.ImmutableTag;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +35,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
+@Slf4j
 public class MultiTaggedGauge {
 
     private String name;
@@ -49,6 +50,7 @@ public class MultiTaggedGauge {
     }
 
     public void set(double value, String ... tagValues){
+        log.info("tagValues: {}, tagNames: {}", tagValues, tagNames);
         String valuesString = Arrays.toString(tagValues);
         if(tagValues.length != tagNames.length) {
             throw new IllegalArgumentException("Gauge tags mismatch! Expected args are "+Arrays.toString(tagNames)+", provided tags are "+valuesString);
