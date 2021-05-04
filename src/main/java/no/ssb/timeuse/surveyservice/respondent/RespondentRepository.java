@@ -25,6 +25,8 @@ public interface RespondentRepository extends JpaRepository<Respondent, Long>, R
     List<Respondent> findAllByEmailContainingIgnoreCase(String email);
     List<Respondent> findAllByNameContainingIgnoreCase(String name);
 
+    List<Respondent> findAllByInterviewerInterviewerId(UUID interviewerId);
+
 
     @Query("select r.diaryStart as diaryStart, r.statusDiary as statusDiary, r.statusSurvey as statusSurvey, "
             + "r.statusRecruitment as statusRecruitment, r.statusQuestionnaire as statusQuestionnaire, count(r) as total "
