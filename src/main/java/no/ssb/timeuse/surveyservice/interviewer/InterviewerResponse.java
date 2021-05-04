@@ -22,12 +22,14 @@ public class InterviewerResponse {
     String name;
     String initials;
     String phone;
-    List<String> respondents;
+//    List<String> respondents;
 
     public static InterviewerResponse map(Interviewer from) {
         InterviewerResponse response = InterviewerResponse.builder()
                 .interviewerId(from.getInterviewerId())
                 .name(from.getName())
+                .initials(from.getInitials())
+                .phone(from.getPhone())
                 .build();
         log.info("response buildt: {}", response);
         return response;

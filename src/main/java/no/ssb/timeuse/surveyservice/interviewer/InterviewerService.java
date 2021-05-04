@@ -7,14 +7,16 @@ import no.ssb.timeuse.surveyservice.exception.ResourceValidationException;
 import no.ssb.timeuse.surveyservice.utils.sample.SampleImportInterviewer;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
 public class InterviewerService {
 
-    private final InterviewerRepository repository;
+    private final InterviewerRepository interviewerRepository;
 
     public void validateInterviewer(InterviewerRequest request) {
         if (request.getName().isEmpty()) {
@@ -32,12 +34,30 @@ public class InterviewerService {
                 .build();
 
         if (interviewerId.isPresent()) {
-            val existingInterviewer = repository.findByInterviewerId(interviewerId.get())
+            val existingInterviewer = interviewerRepository.findByInterviewerId(interviewerId.get())
                     .orElseThrow(() -> new ResourceNotFoundException("interviewer with interviewerId " + interviewerId.get() + " does not exist"));
             newInterviewer.setInterviewerId(existingInterviewer.getInterviewerId());
             newInterviewer.setId(existingInterviewer.getId());
         }
         return newInterviewer;
+    }
+
+
+    public List<InterviewerResponse> searchinterviewer(InterviewerSearchRequest searchRequest) {
+        if (searchRequest.telephone != null) {
+            return interviewerRepository.findAllByPhoneIgnoreCase(searchRequest.getTelephone())
+                    .stream().map(InterviewerResponse::map)
+                    .collect(Collectors.toList());
+        } else if (searchRequest.name != null) {
+            return interviewerRepository.findAllByNameContainingIgnoreCase(searchRequest.getName())
+                    .stream().map((InterviewerResponse::map))
+                    .collect(Collectors.toList());
+        }
+
+        return interviewerRepository.findAllByInitialsContainingIgnoreCase(searchRequest.getInitials())
+                .stream().map((InterviewerResponse::map))
+                .collect(Collectors.toList());
+
     }
 
     public Interviewer mapToInterviewerFromSample(SampleImportInterviewer request) {
