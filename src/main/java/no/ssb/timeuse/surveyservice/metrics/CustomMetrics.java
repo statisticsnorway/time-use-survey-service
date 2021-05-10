@@ -8,6 +8,7 @@ import no.ssb.timeuse.surveyservice.communicationlog.CommunicationLogMetrics;
 //import no.ssb.timeuse.surveyservice.purchase.PurchaseMetrics;
 import no.ssb.timeuse.surveyservice.respondent.RespondentMetrics;
 import no.ssb.timeuse.surveyservice.searchterm.SearchTermMetrics;
+import no.ssb.timeuse.surveyservice.templates.TemplateMetrics;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ public class CustomMetrics {
     private final RespondentMetrics respondentMetrics;
     private final SearchTermMetrics searchTermMetrics;
     private final AppointmentMetrics appointmentMetrics;
+    private final TemplateMetrics templateMetrics;
 
     @Scheduled(initialDelay = 20000L, fixedDelay = 60000L)
     void calculateMetrics() {
@@ -29,5 +31,6 @@ public class CustomMetrics {
         searchTermMetrics.generateMetrics();
         appointmentMetrics.generateMetrics();
         respondentMetrics.generateMetrics();
+        templateMetrics.generateMetrics();
     }
 }
