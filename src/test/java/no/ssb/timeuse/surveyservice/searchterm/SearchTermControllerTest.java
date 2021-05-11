@@ -1,4 +1,4 @@
-package no.ssb.timeuse.surveyservice.searchTerm;
+package no.ssb.timeuse.surveyservice.searchterm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.ssb.timeuse.surveyservice.activitiy.ActivityCategory;
@@ -6,7 +6,6 @@ import no.ssb.timeuse.surveyservice.activitiy.ActivityCategoryRepository;
 import no.ssb.timeuse.surveyservice.exception.ResourceExistsException;
 import no.ssb.timeuse.surveyservice.exception.ResourceNotFoundException;
 import no.ssb.timeuse.surveyservice.exception.ResourceValidationException;
-import no.ssb.timeuse.surveyservice.searchterm.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,4 +1,4 @@
-package no.ssb.timeuse.surveyservice.searchTerm;
+package no.ssb.timeuse.surveyservice.searchterm;
 
 import lombok.val;
 import no.ssb.timeuse.surveyservice.CommonMocks;
@@ -7,10 +7,6 @@ import no.ssb.timeuse.surveyservice.activitiy.ActivityCategoryRepository;
 import no.ssb.timeuse.surveyservice.exception.ResourceExistsException;
 import no.ssb.timeuse.surveyservice.exception.ResourceNotFoundException;
 import no.ssb.timeuse.surveyservice.exception.ResourceValidationException;
-import no.ssb.timeuse.surveyservice.searchterm.SearchTerm;
-import no.ssb.timeuse.surveyservice.searchterm.SearchTermRepository;
-import no.ssb.timeuse.surveyservice.searchterm.SearchTermRequest;
-import no.ssb.timeuse.surveyservice.searchterm.SearchTermService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
