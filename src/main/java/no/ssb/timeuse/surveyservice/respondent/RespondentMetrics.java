@@ -15,6 +15,8 @@ public class RespondentMetrics {
     private static final String METRICS_PREFIX = "tus.ss.respondent.";
     private final AtomicInteger gaugeTotal;
     private MultiTaggedGauge mtgStatus;
+    private MultiTaggedGauge mtgDiaryStartHeatmap;
+    private MultiTaggedGauge mtgDiaryEndHeatmap;
 
     private final RespondentRepository respondentRepository;
 
@@ -22,11 +24,15 @@ public class RespondentMetrics {
         this.respondentRepository = respondentRepository;
         gaugeTotal = meterRegistry.gauge(METRICS_PREFIX + "total", new AtomicInteger(0));
         mtgStatus = new MultiTaggedGauge(METRICS_PREFIX + "status", meterRegistry, "date", "diary", "survey", "recruitment", "questionnaire");
+        mtgDiaryStartHeatmap = new MultiTaggedGauge(METRICS_PREFIX + "heatmap.diarystart", meterRegistry, "weekday", "survey-status");
+        mtgDiaryEndHeatmap = new MultiTaggedGauge(METRICS_PREFIX + "heatmap.diaryend", meterRegistry, "weekday", "survey-status");
     }
 
     public void generateMetrics() {
         countTotals();
         countPerStatus();
+        countPerDiaryStartWeekday();
+        countPerDiaryEndWeekday();
     }
 
     private void countTotals() {
@@ -47,4 +53,25 @@ public class RespondentMetrics {
             mtgStatus.set(count.getTotal(), diaryStart, statusDiary, statusSurvey, statusRecruitment, statusQuestionnaire);
         }
     }
+
+    private void countPerDiaryStartWeekday() {
+        mtgDiaryStartHeatmap.resetValues();
+        List<RespondentMetricsDayCount> numberOfRespondentsPerDiaryStartWeekday = respondentRepository.getNumberOfRespondentsPerDiaryStartWeekday();
+        for ( RespondentMetricsDayCount count : numberOfRespondentsPerDiaryStartWeekday) {
+            String weekday = Optional.ofNullable(count.getDayOfWeek()).map(String::valueOf).orElse("");
+            String statusSurvey = Optional.ofNullable(count.getStatusSurvey()).map(String::valueOf).orElse("");
+            mtgDiaryStartHeatmap.set(count.getTotal(), weekday, statusSurvey);
+        }
+    }
+
+    private void countPerDiaryEndWeekday() {
+        mtgDiaryEndHeatmap.resetValues();
+        List<RespondentMetricsDayCount> numberOfRespondentsPerDiaryStartWeekday = respondentRepository.getNumberOfRespondentsPerDiaryEndWeekday();
+        for ( RespondentMetricsDayCount count : numberOfRespondentsPerDiaryStartWeekday) {
+            String weekday = Optional.ofNullable(count.getDayOfWeek()).map(String::valueOf).orElse("");
+            String statusSurvey = Optional.ofNullable(count.getStatusSurvey()).map(String::valueOf).orElse("");
+            mtgDiaryEndHeatmap.set(count.getTotal(), weekday, statusSurvey);
+        }
+    }
+
 }
