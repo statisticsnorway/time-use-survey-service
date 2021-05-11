@@ -30,8 +30,8 @@ public class RespondentStatusController {
                              .orElseThrow(() -> new ResourceNotFoundException(
                                      "Respondent with Id " + from.getRespondentId() + " does not exist"));
 
-        respondent.setStatusQuestionnaire(from.getStatusQuestionnaire());
-        respondent.setStatusDiary(from.getStatusDiary());
+        if (from.getStatusQuestionnaire() != null) respondent.setStatusQuestionnaire(from.getStatusQuestionnaire());
+        if (from.getStatusDiary() != null) respondent.setStatusDiary(from.getStatusDiary());
         respondentRepository.save(respondent);
     }
 }

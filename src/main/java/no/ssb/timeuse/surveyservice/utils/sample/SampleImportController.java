@@ -47,7 +47,9 @@ public class SampleImportController {
         List<SampleImport> updatedFrom = from;
         updatedFrom.stream().forEach(r -> {
             validateSampleImport(r);
-            r.setNewUUID(UUID.randomUUID());
+            if(r.getNewUUID()==null) {
+                r.setNewUUID(UUID.randomUUID());
+            }
             if (r.getCareOfAddress() != null && !r.getCareOfAddress().isEmpty()) {
                 if (r.getAddress() != null && !r.getAddress().isEmpty()) {
                     r.setAddress(r.getCareOfAddress() + ", " + r.getAddress());

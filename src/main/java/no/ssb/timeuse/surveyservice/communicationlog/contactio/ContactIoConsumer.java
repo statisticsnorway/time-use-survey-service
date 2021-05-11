@@ -56,7 +56,7 @@ public class ContactIoConsumer {
             return ContactIoDto.builder()
                     .requestId(entry.getId().toString())
                     .type("email")
-                    .from("service-contact-io@ssb.no")
+                    .replyTo("tidsbruk@ssb.no")
                     .to(entry.getRespondent().getEmail())
                     .message(entry.getMessage())
                     .build();

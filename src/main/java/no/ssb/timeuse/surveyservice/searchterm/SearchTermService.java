@@ -23,18 +23,20 @@ public class SearchTermService {
         return repository.save(mapToDao(request, id));
     }
 
-    public void validateActivityCode(String activityCode) {
+    public boolean validateActivityCode(String activityCode) {
         if (activityCategoryRepository.findByCode(activityCode).isEmpty()) {
             throw new ResourceValidationException("Activity Category with the code " + activityCode + " does not exist");
         }
+        return true;
     }
 
-    public void findDuplicates(SearchTermRequest request) {
+    public boolean findDuplicates(SearchTermRequest request) {
         if(repository.findByTextIgnoreCase(request.getText()).stream()
                 .map(SearchTerm::getActivity)
                 .anyMatch(d -> d.getCode().equals(request.getActivityCode()))) {
             throw new ResourceExistsException("A search term with the exact same text and ActivityCategory already exists!");
         }
+        return true;
     }
 
     public SearchTerm mapToDao(SearchTermRequest request, Optional<Long> searchTermId) {

@@ -36,7 +36,7 @@ public class RespondentController {
     @GetMapping
     public List<RespondentResponse> entries() {
         return repository.findAll().stream()
-                .map(r -> RespondentResponse.map(r))
+                .map(RespondentResponse::map)
                 .collect(Collectors.toList());
     }
 
@@ -44,7 +44,7 @@ public class RespondentController {
     public RespondentResponse findRespondentByRespondentId(@PathVariable UUID respondentId) {
         log.info("get respondent with respondentId {}", respondentId);
         return repository.findByRespondentId(respondentId)
-                .map(r -> RespondentResponse.map(r))
+                .map(RespondentResponse::map)
                 .orElseThrow(() -> new ResourceNotFoundException("Respondent with respondentId " + respondentId + " does not exist"));
     }
 
@@ -62,6 +62,14 @@ public class RespondentController {
     public RespondentResponse getByIoNumber(@PathVariable Long ioNumber) {
         return repository.findByIoNumber(ioNumber).map(RespondentResponse::map).
                 orElseThrow(() -> new ResourceNotFoundException("Respondent with IO-number " + ioNumber + " does not exist"));
+    }
+
+
+    @GetMapping("/interviewer/{interviewerId}")
+    public List<RespondentResponse> getByInterviewerId(@PathVariable UUID interviewerId) {
+        return repository.findAllByInterviewerInterviewerId(interviewerId).stream()
+                .map(RespondentResponse::map)
+                .collect(Collectors.toList());
     }
 
     @DeleteMapping("{respondentId}")

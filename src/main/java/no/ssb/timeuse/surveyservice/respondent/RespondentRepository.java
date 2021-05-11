@@ -25,11 +25,32 @@ public interface RespondentRepository extends JpaRepository<Respondent, Long>, R
     List<Respondent> findAllByEmailContainingIgnoreCase(String email);
     List<Respondent> findAllByNameContainingIgnoreCase(String name);
 
+    List<Respondent> findAllByInterviewerInterviewerId(UUID interviewerId);
+
 
     @Query("select r.diaryStart as diaryStart, r.statusDiary as statusDiary, r.statusSurvey as statusSurvey, "
             + "r.statusRecruitment as statusRecruitment, r.statusQuestionnaire as statusQuestionnaire, count(r) as total "
             + "from Respondent r group by r.diaryStart, r.statusDiary, r.statusSurvey, r.statusRecruitment, r.statusQuestionnaire")
     List<RespondentMetricsStatusCount> getNumberOfRespondentsPerStatus();
+
+
+    // from forbruk 30.04.2020
+    @Query("select r.statusSurvey as status, r.diaryStart as diaryStart, r.region as region , count(r) as total "
+            + "from Respondent r group by r.statusSurvey, r.diaryStart, r.region")
+    List<MetricsCountStatusByDiaryStart> getNumberOfRespondentsPerStatusSurvey();
+
+    @Query("select r.statusRecruitment as status, r.diaryStart as diaryStart, r.region as region , count(r) as total "
+            + "from Respondent r group by r.statusRecruitment, r.diaryStart, r.region")
+    List<MetricsCountStatusByDiaryStart> getNumberOfRespondentsPerStatusRecruitment();
+
+    @Query("select r.statusDiary as status, r.diaryStart as diaryStart, r.region as region , count(r) as total "
+            + "from Respondent r group by r.statusDiary, r.diaryStart, r.region")
+    List<MetricsCountStatusByDiaryStart> getNumberOfRespondentsPerStatusDiary();
+
+    @Query("select r.statusQuestionnaire as status, r.diaryStart as diaryStart, r.region as region , count(r) as total "
+            + "from Respondent r group by r.statusQuestionnaire, r.diaryStart, r.region")
+    List<MetricsCountStatusByDiaryStart> getNumberOfRespondentsPerStatusQuestionnaire();
+
 
     @Query("select extract(dow from r.diaryStart) as dayOfWeek, r.statusSurvey as statusSurvey, count(r) as total "
             + "from Respondent r group by dayOfWeek, statusSurvey")

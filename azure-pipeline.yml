@@ -57,7 +57,7 @@ resources:
 jobs:
   - template: complete-builds/job-test-coverage-build-gcr.yml@templates
     parameters:
-      project: forbruk
+      project: timeuse
       imageName: $(imageName)
       repoName: $(repoName)
       artifactName: timeuse-survey-service

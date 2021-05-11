@@ -20,10 +20,11 @@ public class RespondentService {
     private final RespondentRepository repository;
     private final InterviewerRepository interviewerRepository;
 
-    public void validateRespondent(RespondentRequest request) {
+    public boolean validateRespondent(RespondentRequest request) {
         if (request.getName().isEmpty()) {
             throw new ResourceValidationException("Respondent must include a first and last name");
         }
+        return true;
     }
 
     public Respondent mapToDao(RespondentRequest request, Optional<UUID> respondentId) {
@@ -34,7 +35,7 @@ public class RespondentService {
                 .ioNumber(request.getIoNumber())
                 .phone(request.getPhone())
                 .email(request.getEmail())
-                .dateOfBirth(LocalDate.parse(request.getDateOfBirth(), DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyyMMdd]")))
+                .dateOfBirth(request.getDateOfBirth() != null ? LocalDate.parse(request.getDateOfBirth(), DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyyMMdd]")) : null)
                 .age(request.getAge())
                 .gender(request.getGender())
                 .education(request.getEducation())

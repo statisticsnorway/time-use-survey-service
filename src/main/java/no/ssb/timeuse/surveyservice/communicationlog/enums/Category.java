@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum Category {
-    INVITATION,
+    LOGININFO,
     REMINDER,
     APPOINTMENT,
-    HELPDESK,
     FOLLOWUP,
     INTERNAL_MESSAGE,
     FOLLOWUP_RESPONSE,

@@ -1,10 +1,14 @@
 package no.ssb.timeuse.surveyservice;
 
+import no.ssb.timeuse.surveyservice.activitiy.ActivityCategory;
 import no.ssb.timeuse.surveyservice.communicationlog.CommunicationLogEntry;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Direction;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Type;
 //import no.ssb.timeuse.surveyservice.purchase.Purchase;
 import no.ssb.timeuse.surveyservice.respondent.Respondent;
+import no.ssb.timeuse.surveyservice.respondent.RespondentRequest;
+import no.ssb.timeuse.surveyservice.searchterm.SearchTerm;
+import no.ssb.timeuse.surveyservice.searchterm.SearchTermRequest;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -33,6 +37,13 @@ public class CommonMocks {
 //                            .build())
 //                    .timeOfPurchase(LocalDate.now())
 //                    .build()))
+            .build();
+
+    public static final RespondentRequest respondentRequest = RespondentRequest.builder()
+            .name("Lars Larsen")
+            .phone("982")
+            .email("mail")
+            .age(45)
             .build();
 
     public static final List<CommunicationLogEntry> listOfCommunicationLogEntries = List.of(
@@ -76,6 +87,27 @@ public class CommonMocks {
                     .message("Call to SSB!")
                     .build()
     );
+
+    public static final ActivityCategory activity = ActivityCategory.builder()
+            .code("1.1.1")
+            .id(1L)
+            .description("test data")
+            .level(3)
+            .helpText("help text")
+            .build();
+
+    public static final SearchTermRequest searchTermRequest = SearchTermRequest.builder()
+            .text("Test searchTermRequest")
+            .activityCode("1.1.1")
+            .build();
+
+    public static final SearchTerm searchTerm = SearchTerm.builder()
+            .id(1L)
+            .text("Test searhTerm")
+            .activity(activity)
+            .build();
+
+
 
 
 }
