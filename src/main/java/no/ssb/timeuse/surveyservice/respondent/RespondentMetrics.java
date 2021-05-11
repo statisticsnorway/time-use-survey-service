@@ -99,26 +99,29 @@ public class RespondentMetrics {
         }
     }
 
+
     private void countPerDiaryStartWeekday() {
         mtgDiaryStartHeatmap.resetValues();
         List<RespondentMetricsDayCount> numberOfRespondentsPerDiaryStartWeekday = respondentRepository.getNumberOfRespondentsPerDiaryStartWeekday();
-        for ( RespondentMetricsDayCount count : numberOfRespondentsPerDiaryStartWeekday) {
-            String weekday = Optional.ofNullable(count.getDayOfWeek()).map(String::valueOf).orElse("");
-            String statusSurvey = Optional.ofNullable(count.getStatusSurvey()).map(String::valueOf).orElse("");
-            mtgDiaryStartHeatmap.set(count.getTotal(), weekday, statusSurvey);
-        }
+        mapMetricsCountPerDiaryWeekdayToMultiTaggedGauge(numberOfRespondentsPerDiaryStartWeekday, mtgDiaryStartHeatmap);
     }
 
     private void countPerDiaryEndWeekday() {
         mtgDiaryEndHeatmap.resetValues();
-        List<RespondentMetricsDayCount> numberOfRespondentsPerDiaryStartWeekday = respondentRepository.getNumberOfRespondentsPerDiaryEndWeekday();
-        for ( RespondentMetricsDayCount count : numberOfRespondentsPerDiaryStartWeekday) {
-            String weekday = Optional.ofNullable(count.getDayOfWeek()).map(String::valueOf).orElse("");
-            String statusSurvey = Optional.ofNullable(count.getStatusSurvey()).map(String::valueOf).orElse("");
-            mtgDiaryEndHeatmap.set(count.getTotal(), weekday, statusSurvey);
-        }
+        List<RespondentMetricsDayCount> numberOfRespondentsPerDiaryEndWeekday = respondentRepository.getNumberOfRespondentsPerDiaryEndWeekday();
+        mapMetricsCountPerDiaryWeekdayToMultiTaggedGauge(numberOfRespondentsPerDiaryEndWeekday, mtgDiaryEndHeatmap);
     }
 
+    private void mapMetricsCountPerDiaryWeekdayToMultiTaggedGauge(List<RespondentMetricsDayCount> list, MultiTaggedGauge mtg) {
+        for ( RespondentMetricsDayCount count : list) {
+            String weekday = Optional.ofNullable(count.getDayOfWeek()).map(String::valueOf).orElse("");
+            String statusSurvey = Optional.ofNullable(CodeList.status.get(count.getStatusSurvey())).map(e -> e.getValue()).orElse("");
+            if (!statusSurvey.isEmpty() && count.getStatusSurvey().length()==2) {
+                statusSurvey = count.getStatusSurvey() + " " + statusSurvey;
+            }
+            mtg.set(count.getTotal(), weekday, statusSurvey);
+        }
+    }
 
     private void initCodeLists() {
         // TODO: Get this from KLASS
