@@ -34,6 +34,7 @@ public class RespondentMetrics {
 
 
     public RespondentMetrics(MeterRegistry meterRegistry, RespondentRepository respondentRepository) {
+        initCodeLists();
         this.respondentRepository = respondentRepository;
         this.meterRegistry = meterRegistry;
         gaugeTotal = meterRegistry.gauge(METRICS_PREFIX + "total", new AtomicInteger(0));
