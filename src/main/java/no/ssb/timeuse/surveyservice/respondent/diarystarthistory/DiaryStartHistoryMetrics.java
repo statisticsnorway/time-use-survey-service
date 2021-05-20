@@ -2,6 +2,8 @@ package no.ssb.timeuse.surveyservice.respondent.diarystarthistory;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.val;
+import no.ssb.timeuse.surveyservice.metrics.CustomMetrics;
+import no.ssb.timeuse.surveyservice.metrics.TaggedGauge;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -10,13 +12,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DiaryStartHistoryMetrics {
 
     private static final String METRICS_PREFIX = "tus.ss.diarystarthist.";
-    private final AtomicInteger gaugeTotal;
+    private TaggedGauge tgDbCount;
 
     private final DiaryStartHistoryRepository diaryStartHistoryRepository;
 
     public DiaryStartHistoryMetrics(MeterRegistry meterRegistry, DiaryStartHistoryRepository diaryStartHistoryRepository) {
         this.diaryStartHistoryRepository = diaryStartHistoryRepository;
-        this.gaugeTotal = meterRegistry.gauge(METRICS_PREFIX + "total", new AtomicInteger(0));    }
+        tgDbCount = new TaggedGauge(CustomMetrics.DB_COUNT, "table", meterRegistry);
+    }
 
     public void generateMetrics() {
         countTotals();
@@ -24,7 +27,7 @@ public class DiaryStartHistoryMetrics {
 
     private void countTotals() {
         val totalNumber = diaryStartHistoryRepository.count();
-        gaugeTotal.set((int) totalNumber);
+            tgDbCount.set("DiaryStartHistory", totalNumber);
     }
 
 }
