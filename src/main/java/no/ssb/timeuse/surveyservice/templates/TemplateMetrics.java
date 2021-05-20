@@ -2,6 +2,8 @@ package no.ssb.timeuse.surveyservice.templates;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.val;
+import no.ssb.timeuse.surveyservice.metrics.CustomMetrics;
+import no.ssb.timeuse.surveyservice.metrics.TaggedGauge;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -10,13 +12,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TemplateMetrics {
 
     private static final String METRICS_PREFIX = "tus.ss.template.";
-    private final AtomicInteger gaugeTotal;
+    private TaggedGauge tgDbCount;
 
     private final TemplateRepository templateRepository;
 
     public TemplateMetrics(MeterRegistry meterRegistry, TemplateRepository templateRepository) {
         this.templateRepository = templateRepository;
-        this.gaugeTotal = meterRegistry.gauge(METRICS_PREFIX + "total", new AtomicInteger(0));    }
+        tgDbCount = new TaggedGauge(CustomMetrics.DB_COUNT, "table", meterRegistry);
+    }
 
     public void generateMetrics() {
         countTotals();
@@ -24,7 +27,7 @@ public class TemplateMetrics {
 
     private void countTotals() {
         val totalNumber = templateRepository.count();
-        gaugeTotal.set((int) totalNumber);
+        tgDbCount.set("Template", totalNumber);
     }
 
 }
