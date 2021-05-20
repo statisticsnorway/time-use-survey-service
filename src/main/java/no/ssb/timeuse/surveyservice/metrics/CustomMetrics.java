@@ -1,6 +1,5 @@
 package no.ssb.timeuse.surveyservice.metrics;
 
-import io.micrometer.core.instrument.MeterRegistry;
 import lombok.AllArgsConstructor;
 import no.ssb.timeuse.surveyservice.activitiy.ActivityCategoryMetrics;
 import no.ssb.timeuse.surveyservice.appointment.AppointmentMetrics;
@@ -10,6 +9,7 @@ import no.ssb.timeuse.surveyservice.communicationlog.CommunicationLogMetrics;
 import no.ssb.timeuse.surveyservice.diary.DiaryMetrics;
 import no.ssb.timeuse.surveyservice.interviewer.InterviewerMetrics;
 import no.ssb.timeuse.surveyservice.respondent.RespondentMetrics;
+import no.ssb.timeuse.surveyservice.respondent.diarystarthistory.DiaryStartHistoryMetrics;
 import no.ssb.timeuse.surveyservice.searchterm.SearchTermMetrics;
 import no.ssb.timeuse.surveyservice.templates.TemplateMetrics;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,6 +29,7 @@ public class CustomMetrics {
     private final TemplateMetrics templateMetrics;
     private final DiaryMetrics diaryMetrics;
     private final InterviewerMetrics interviewerMetrics;
+    private final DiaryStartHistoryMetrics diaryStartHistoryMetrics;
 
     @Scheduled(initialDelay = 20000L, fixedDelay = 60000L)
     void calculateMetrics() {
@@ -41,6 +42,6 @@ public class CustomMetrics {
         templateMetrics.generateMetrics();
         diaryMetrics.generateMetrics();
         interviewerMetrics.generateMetrics();
+        diaryStartHistoryMetrics.generateMetrics();
     }
-
 }

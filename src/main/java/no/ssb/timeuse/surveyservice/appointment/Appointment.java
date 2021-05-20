@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import no.ssb.timeuse.surveyservice.interviewer.Interviewer;
 import no.ssb.timeuse.surveyservice.respondent.Respondent;
 

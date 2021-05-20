@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import no.ssb.timeuse.surveyservice.appointment.Appointment;
+import no.ssb.timeuse.surveyservice.respondent.diarystarthistory.DiaryStartHistory;
 import no.ssb.timeuse.surveyservice.communicationlog.CommunicationLogEntry;
 import no.ssb.timeuse.surveyservice.interviewer.Interviewer;
 
@@ -92,6 +93,12 @@ public class Respondent {
     @Column(name = "DIARY_END")
     private LocalDate diaryEnd;
 
+    @Column(name = "DIARY_START_ORIG")
+    private LocalDate diaryStartOrig;
+
+    @OneToMany(mappedBy = "respondent", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<DiaryStartHistory> diaryStartHistories;
+
     @Column(name = "STATUS_DIARY")
     private String statusDiary;
 
@@ -126,4 +133,40 @@ public class Respondent {
     @OneToMany(mappedBy = "respondent", cascade = CascadeType.ALL)
     private List<Appointment> appointments;
 
+//    @Override
+//    public String toString() {
+//        return "Respondent{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", respondentId=" + respondentId +
+//                ", ioNumber=" + ioNumber +
+//                ", phone='" + phone + '\'' +
+//                ", email='" + email + '\'' +
+//                ", gender='" + gender + '\'' +
+//                ", dateOfBirth=" + dateOfBirth +
+//                ", age=" + age +
+//                ", education='" + education + '\'' +
+//                ", address='" + address + '\'' +
+//                ", postcode='" + postcode + '\'' +
+//                ", city='" + city + '\'' +
+//                ", region='" + region + '\'' +
+//                ", municipalityNumber='" + municipalityNumber + '\'' +
+//                ", dwellingNumber='" + dwellingNumber + '\'' +
+//                ", diaryStart=" + diaryStart +
+//                ", diaryEnd=" + diaryEnd +
+//                ", diaryStartOrig=" + diaryStartOrig +
+////                ", diaryStartHistories=" + (diaryStartHistories != null ? diaryStartHistories.size() : null) +
+//                ", statusDiary='" + statusDiary + '\'' +
+//                ", statusSurvey='" + statusSurvey + '\'' +
+//                ", statusRecruitment='" + statusRecruitment + '\'' +
+//                ", statusQuestionnaire='" + statusQuestionnaire + '\'' +
+//                ", recruitmentStart=" + recruitmentStart +
+//                ", recruitmentEnd=" + recruitmentEnd +
+//                ", recruitmentMinutesSpent=" + recruitmentMinutesSpent +
+//                ", acceptedInitialDiaryStart=" + acceptedInitialDiaryStart +
+//                ", interviewer=" + interviewer +
+////                ", communicationLogs=" + communicationLogs +
+////                ", appointments=" + appointments +
+//                '}';
+//    }
 }
