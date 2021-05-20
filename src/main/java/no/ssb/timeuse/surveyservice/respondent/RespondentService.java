@@ -1,7 +1,10 @@
 package no.ssb.timeuse.surveyservice.respondent;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import no.ssb.timeuse.surveyservice.diary.Diary;
+import no.ssb.timeuse.surveyservice.respondent.diarystarthistory.DiaryStartHistory;
 import no.ssb.timeuse.surveyservice.exception.ResourceNotFoundException;
 import no.ssb.timeuse.surveyservice.exception.ResourceValidationException;
 import no.ssb.timeuse.surveyservice.interviewer.InterviewerRepository;
@@ -10,11 +13,15 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+
 @Component
 @AllArgsConstructor
+@Slf4j
 public class RespondentService {
 
     private final RespondentRepository repository;
@@ -69,6 +76,22 @@ public class RespondentService {
                         .orElseThrow(() -> new ResourceNotFoundException("Interviewer with interviewerId " + request.getInterviewerId() + " does not exist"));
                 newRespondent.setInterviewer(newInterviewer);
             }
+
+            log.info("ny diarystart: {}, eksisterende: {}", newRespondent.getDiaryStart(), existingRespondent.getDiaryStart());
+            if (!newRespondent.getDiaryStart().equals(existingRespondent.getDiaryStart())) {
+                log.info("ulike startdatoer");
+                val diaryStartHistory = DiaryStartHistory.builder()
+                        .respondent(existingRespondent)
+                        .diaryStart(existingRespondent.getDiaryStart())
+                        .build();
+                List<DiaryStartHistory> respondentDiaryStartHistories = newRespondent.getDiaryStartHistories() != null ?
+                        newRespondent.getDiaryStartHistories() : new ArrayList<DiaryStartHistory>(0);
+                log.info("history: {}", respondentDiaryStartHistories);
+                respondentDiaryStartHistories.add(diaryStartHistory);
+                log.info("etter adding: {}", respondentDiaryStartHistories);
+
+                newRespondent.setDiaryStartHistories(respondentDiaryStartHistories);
+            }
         }
         return newRespondent;
     }
@@ -97,6 +120,7 @@ public class RespondentService {
                 .statusSurvey(request.getStatusSurvey())
                 .diaryStart(LocalDate.parse(request.getDiaryStart(), DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyyMMdd]")))
                 .diaryEnd(LocalDate.parse(request.getDiaryEnd(), DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyyMMdd]")))
+                .diaryStartOrig(LocalDate.parse(request.getDiaryStart(), DateTimeFormatter.ofPattern("[yyyy-MM-dd][yyyyMMdd]")))
                 .build();
     }
 
