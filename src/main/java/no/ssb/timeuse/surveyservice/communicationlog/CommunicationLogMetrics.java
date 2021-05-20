@@ -15,7 +15,6 @@ public class CommunicationLogMetrics {
 
     private static final String METRICS_PREFIX = "tus.ss.commlog.";
 
-    private final MeterRegistry meterRegistry;
     private TaggedGauge taggedGaugeCategory;
     private TaggedGauge tgDbCount;
 
@@ -23,7 +22,7 @@ public class CommunicationLogMetrics {
 
     public CommunicationLogMetrics(MeterRegistry meterRegistry, CommunicationLogRepository communicationLogRepository) {
         this.communicationLogRepository = communicationLogRepository;
-        this.meterRegistry = meterRegistry;
+
         tgDbCount = new TaggedGauge(CustomMetrics.DB_COUNT, "table", meterRegistry);
         taggedGaugeCategory = new TaggedGauge(METRICS_PREFIX+"category", "category", meterRegistry);
     }

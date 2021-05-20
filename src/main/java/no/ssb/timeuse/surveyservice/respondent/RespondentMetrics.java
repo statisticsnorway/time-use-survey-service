@@ -3,6 +3,7 @@ package no.ssb.timeuse.surveyservice.respondent;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import no.ssb.timeuse.surveyservice.codelist.CodeInfo;
 import no.ssb.timeuse.surveyservice.codelist.CodeList;
 import no.ssb.timeuse.surveyservice.metrics.CustomMetrics;
 import no.ssb.timeuse.surveyservice.metrics.MultiTaggedGauge;
@@ -89,7 +90,7 @@ public class RespondentMetrics {
 
     private void mapMetricsCountStatusByDiaryStartToMultiTaggedGauge(List<MetricsCountStatusByDiaryStart> list, MultiTaggedGauge mtg, boolean includeKeyInStatus) {
         for (MetricsCountStatusByDiaryStart count : list) {
-            String status = Optional.ofNullable(CodeList.status.get(count.getStatus())).map(e -> e.getValue()).orElse("");
+            String status = Optional.ofNullable(CodeList.status.get(count.getStatus())).map(CodeInfo::getValue).orElse("");
             if (includeKeyInStatus && !status.isEmpty() && count.getStatus().length()==2) {
                 status = count.getStatus() + " " + status;
             }
@@ -104,6 +105,10 @@ public class RespondentMetrics {
     private void countPerDiaryStartWeekday() {
         mtgDiaryStartHeatmap.resetValues();
         List<RespondentMetricsDayCount> numberOfRespondentsPerDiaryStartWeekday = respondentRepository.getNumberOfRespondentsPerDiaryStartWeekday();
+        mapMetricsCountPerDiaryWeekdayToMultiTaggedGauge(numberOfRespondentsPerDiaryStartWeekday, mtgDiaryStartHeatmap);
+    }
+
+    private void mapMetricsCountPerDiaryWeekdayToMultiTaggedGauge(List<RespondentMetricsDayCount> numberOfRespondentsPerDiaryStartWeekday, MultiTaggedGauge mtgDiaryStartHeatmap) {
         for ( RespondentMetricsDayCount count : numberOfRespondentsPerDiaryStartWeekday) {
             String weekday = Optional.ofNullable(count.getDayOfWeek()).map(String::valueOf).orElse("");
             String statusSurvey = Optional.ofNullable(count.getStatusSurvey()).map(String::valueOf).orElse("");
@@ -114,11 +119,7 @@ public class RespondentMetrics {
     private void countPerDiaryEndWeekday() {
         mtgDiaryEndHeatmap.resetValues();
         List<RespondentMetricsDayCount> numberOfRespondentsPerDiaryStartWeekday = respondentRepository.getNumberOfRespondentsPerDiaryEndWeekday();
-        for ( RespondentMetricsDayCount count : numberOfRespondentsPerDiaryStartWeekday) {
-            String weekday = Optional.ofNullable(count.getDayOfWeek()).map(String::valueOf).orElse("");
-            String statusSurvey = Optional.ofNullable(count.getStatusSurvey()).map(String::valueOf).orElse("");
-            mtgDiaryEndHeatmap.set(count.getTotal(), weekday, statusSurvey);
-        }
+        mapMetricsCountPerDiaryWeekdayToMultiTaggedGauge(numberOfRespondentsPerDiaryStartWeekday, mtgDiaryEndHeatmap);
     }
 
 
