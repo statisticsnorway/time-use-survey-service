@@ -1,5 +1,6 @@
 package no.ssb.timeuse.surveyservice.respondent;
 
+import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -43,10 +44,11 @@ public class RespondentMetrics {
         mtgStatusRecruitment = new MultiTaggedGauge(METRICS_PREFIX+"status.recruitment", meterRegistry, "status", "diary-start", "region");
         mtgStatusDiary = new MultiTaggedGauge(METRICS_PREFIX+"status.diary", meterRegistry, "status", "diary-start", "region");
         mtgStatusQuestionnaire = new MultiTaggedGauge(METRICS_PREFIX+"status.questionnaire", meterRegistry, "status", "diary-start", "region");
-        mtgDiaryStartHeatmap = new MultiTaggedGauge(METRICS_PREFIX + "heatmap.diarystart", meterRegistry, "weekday", "survey-status");
-        mtgDiaryEndHeatmap = new MultiTaggedGauge(METRICS_PREFIX + "heatmap.diaryend", meterRegistry, "weekday", "survey-status");
+        mtgDiaryStartHeatmap = new MultiTaggedGauge(METRICS_PREFIX + "heatmap.diarystart", meterRegistry, "year", "month", "weekday", "survey-status");
+        mtgDiaryEndHeatmap = new MultiTaggedGauge(METRICS_PREFIX + "heatmap.diaryend", meterRegistry, "year", "month", "weekday", "survey-status");
     }
 
+    @Timed(value = "tus.ss.custom.metrics", description = "Time taken to generate metrics")
     public void generateMetrics() {
         countTotals();
         countPerStatusSurvey();
@@ -108,9 +110,11 @@ public class RespondentMetrics {
 
     private void mapMetricsCountPerDiaryWeekdayToMultiTaggedGauge(List<RespondentMetricsDayCount> numberOfRespondentsPerDiaryStartWeekday, MultiTaggedGauge mtgDiaryStartHeatmap) {
         for ( RespondentMetricsDayCount count : numberOfRespondentsPerDiaryStartWeekday) {
+            String year = Optional.ofNullable(count.getYear()).map(String::valueOf).orElse("");
+            String month = Optional.ofNullable(count.getMonth()).map(String::valueOf).orElse("");
             String weekday = Optional.ofNullable(count.getDayOfWeek()).map(String::valueOf).orElse("");
             String statusSurvey = Optional.ofNullable(count.getStatusSurvey()).map(String::valueOf).orElse("");
-            mtgDiaryStartHeatmap.set(count.getTotal(), weekday, statusSurvey);
+            mtgDiaryStartHeatmap.set(count.getTotal(), year, month, weekday, statusSurvey);
         }
     }
 

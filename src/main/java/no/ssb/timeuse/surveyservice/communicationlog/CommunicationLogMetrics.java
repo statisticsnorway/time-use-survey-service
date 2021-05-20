@@ -1,5 +1,6 @@
 package no.ssb.timeuse.surveyservice.communicationlog;
 
+import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.val;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Category;
@@ -27,6 +28,7 @@ public class CommunicationLogMetrics {
         taggedGaugeCategory = new TaggedGauge(METRICS_PREFIX+"category", "category", meterRegistry);
     }
 
+    @Timed(value = "tus.ss.custom.metrics", description = "Time taken to generate metrics")
     public void generateMetrics() {
         countTotals();
         countPerCategory();
