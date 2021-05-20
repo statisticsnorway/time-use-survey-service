@@ -30,7 +30,6 @@ public class RespondentMetrics {
     private MultiTaggedGauge mtgStatusRecruitment;
     private MultiTaggedGauge mtgStatusDiary;
     private MultiTaggedGauge mtgStatusQuestionnaire;
-    private MultiTaggedGauge mtgDiaryStart;
     private MultiTaggedGauge mtgDiaryStartHeatmap;
     private MultiTaggedGauge mtgDiaryEndHeatmap;
 
@@ -44,7 +43,6 @@ public class RespondentMetrics {
         mtgStatusRecruitment = new MultiTaggedGauge(METRICS_PREFIX+"status.recruitment", meterRegistry, "status", "diary-start", "region");
         mtgStatusDiary = new MultiTaggedGauge(METRICS_PREFIX+"status.diary", meterRegistry, "status", "diary-start", "region");
         mtgStatusQuestionnaire = new MultiTaggedGauge(METRICS_PREFIX+"status.questionnaire", meterRegistry, "status", "diary-start", "region");
-        mtgDiaryStart = new MultiTaggedGauge(METRICS_PREFIX+"status.diaryStart", meterRegistry, "status", "diaryStart", "region");
         mtgDiaryStartHeatmap = new MultiTaggedGauge(METRICS_PREFIX + "heatmap.diarystart", meterRegistry, "weekday", "survey-status");
         mtgDiaryEndHeatmap = new MultiTaggedGauge(METRICS_PREFIX + "heatmap.diaryend", meterRegistry, "weekday", "survey-status");
     }
