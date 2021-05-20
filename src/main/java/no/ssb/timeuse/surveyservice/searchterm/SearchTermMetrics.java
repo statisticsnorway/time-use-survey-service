@@ -2,6 +2,8 @@ package no.ssb.timeuse.surveyservice.searchterm;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.val;
+import no.ssb.timeuse.surveyservice.metrics.CustomMetrics;
+import no.ssb.timeuse.surveyservice.metrics.TaggedGauge;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -10,13 +12,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SearchTermMetrics {
 
     private static final String METRICS_PREFIX = "tus.ss.searchterm.";
-    private final AtomicInteger gaugeTotal;
+    private TaggedGauge tgDbCount;
 
     private final SearchTermRepository searchTermRepository;
 
     public SearchTermMetrics(MeterRegistry meterRegistry, SearchTermRepository searchTermRepository) {
-        gaugeTotal = meterRegistry.gauge(METRICS_PREFIX + "total", new AtomicInteger(0));
         this.searchTermRepository = searchTermRepository;
+        tgDbCount = new TaggedGauge(CustomMetrics.DB_COUNT, "table", meterRegistry);
     }
 
     public void generateMetrics() {
@@ -25,6 +27,6 @@ public class SearchTermMetrics {
 
     private void countTotals() {
         val totalNumber = searchTermRepository.count();
-        gaugeTotal.set((int) totalNumber);
+        tgDbCount.set("SearchTerm", totalNumber);
     }
 }

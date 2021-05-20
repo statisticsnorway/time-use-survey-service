@@ -4,7 +4,9 @@ import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import no.ssb.timeuse.surveyservice.codelist.CodeList;
+import no.ssb.timeuse.surveyservice.metrics.CustomMetrics;
 import no.ssb.timeuse.surveyservice.metrics.MultiTaggedGauge;
+import no.ssb.timeuse.surveyservice.metrics.TaggedGauge;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -20,10 +22,9 @@ public class RespondentMetrics {
     private static final String METRICS_PREFIX = "tus.ss.respondent.";
     private final Map<String, String> regionCodes = new HashMap<>();
 
-    private final MeterRegistry meterRegistry;
     private final RespondentRepository respondentRepository;
 
-    private final AtomicInteger gaugeTotal;
+    private TaggedGauge tgDbCount;
     private MultiTaggedGauge mtgStatusSurvey;
     private MultiTaggedGauge mtgStatusRecruitment;
     private MultiTaggedGauge mtgStatusDiary;
@@ -36,8 +37,8 @@ public class RespondentMetrics {
     public RespondentMetrics(MeterRegistry meterRegistry, RespondentRepository respondentRepository) {
         initCodeLists();
         this.respondentRepository = respondentRepository;
-        this.meterRegistry = meterRegistry;
-        gaugeTotal = meterRegistry.gauge(METRICS_PREFIX + "total", new AtomicInteger(0));
+
+        tgDbCount = new TaggedGauge(CustomMetrics.DB_COUNT, "table", meterRegistry);
         mtgStatusSurvey = new MultiTaggedGauge(METRICS_PREFIX+"status.survey", meterRegistry, "status", "diary-start", "region");
         mtgStatusRecruitment = new MultiTaggedGauge(METRICS_PREFIX+"status.recruitment", meterRegistry, "status", "diary-start", "region");
         mtgStatusDiary = new MultiTaggedGauge(METRICS_PREFIX+"status.diary", meterRegistry, "status", "diary-start", "region");
@@ -59,7 +60,7 @@ public class RespondentMetrics {
 
     private void countTotals() {
         val totalNumber = respondentRepository.count();
-        gaugeTotal.set((int) totalNumber);
+        tgDbCount.set("Respondent", totalNumber);
     }
 
     private void countPerStatusSurvey() {

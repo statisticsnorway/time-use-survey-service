@@ -3,6 +3,7 @@ package no.ssb.timeuse.surveyservice.communicationlog;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.val;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Category;
+import no.ssb.timeuse.surveyservice.metrics.CustomMetrics;
 import no.ssb.timeuse.surveyservice.metrics.TaggedGauge;
 import org.springframework.stereotype.Component;
 
@@ -15,16 +16,15 @@ public class CommunicationLogMetrics {
     private static final String METRICS_PREFIX = "tus.ss.commlog.";
 
     private final MeterRegistry meterRegistry;
-    private final AtomicInteger gaugeTotal;
     private TaggedGauge taggedGaugeCategory;
+    private TaggedGauge tgDbCount;
 
     private final CommunicationLogRepository communicationLogRepository;
 
     public CommunicationLogMetrics(MeterRegistry meterRegistry, CommunicationLogRepository communicationLogRepository) {
         this.communicationLogRepository = communicationLogRepository;
         this.meterRegistry = meterRegistry;
-
-        gaugeTotal = meterRegistry.gauge(METRICS_PREFIX + "total", new AtomicInteger(0));
+        tgDbCount = new TaggedGauge(CustomMetrics.DB_COUNT, "table", meterRegistry);
         taggedGaugeCategory = new TaggedGauge(METRICS_PREFIX+"category", "category", meterRegistry);
     }
 
@@ -35,7 +35,7 @@ public class CommunicationLogMetrics {
 
     private void countTotals() {
         val totalNumber = communicationLogRepository.count();
-        gaugeTotal.set((int) totalNumber);
+        tgDbCount.set("CommLog", totalNumber);
     }
 
     private void countPerCategory() {
