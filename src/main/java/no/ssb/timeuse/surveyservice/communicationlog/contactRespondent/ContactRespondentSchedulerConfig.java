@@ -1,4 +1,4 @@
-package no.ssb.timeuse.surveyservice.communicationlog.contactio;
+package no.ssb.timeuse.surveyservice.communicationlog.contactRespondent;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -7,12 +7,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
 @EnableScheduling
-public class ContactIoSchedulerConfig {
+public class ContactRespondentSchedulerConfig {
 
     @Bean
     @ConditionalOnProperty(value = "contact-io.enabled", havingValue = "true")
-    public ContactIoScheduledTask contactIoScheduledTask() {
-        return new ContactIoScheduledTask();
+    public ContactRespondentScheduledTask contactIoScheduledTask() {
+        return new ContactRespondentScheduledTask();
     }
 
 }

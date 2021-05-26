@@ -1,4 +1,4 @@
-package no.ssb.timeuse.surveyservice.communicationlog.contactio;
+package no.ssb.timeuse.surveyservice.communicationlog.contactRespondent;
 
 import no.ssb.timeuse.surveyservice.CommonMocks;
 import no.ssb.timeuse.surveyservice.communicationlog.CommunicationLogEntry;
@@ -28,10 +28,10 @@ public class ContactIoScheduledTaskTest {
     private CommunicationLogRepository repository;
 
     @Mock
-    private ContactIoConsumer contactIo;
+    private ContactRespondentConsumer contactIo;
 
     @InjectMocks
-    private ContactIoScheduledTask task;
+    private ContactRespondentScheduledTask task;
 
     @Captor
     private ArgumentCaptor<List<CommunicationLogEntry>> capturedEntry;

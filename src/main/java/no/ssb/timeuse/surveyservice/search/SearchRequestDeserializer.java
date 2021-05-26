@@ -37,10 +37,10 @@ public class SearchRequestDeserializer extends StdDeserializer<no.ssb.timeuse.su
     }
 
     @Override
-    public no.ssb.timeuse.surveyservice.search.SearchRequestGroup deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public SearchRequestGroup deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode rootNode = jsonParser.getCodec().readTree(jsonParser);
         log.info("parse json: {}", rootNode);
-         return no.ssb.timeuse.surveyservice.search.SearchRequestGroup.builder().predicates(buildPredicateMap(rootNode))
+         return SearchRequestGroup.builder().predicates(buildPredicateMap(rootNode))
                  .diaryStartFrom(rootNode.get("diaryStartFrom") != null ? LocalDate.parse(rootNode.get("diaryStartFrom").asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null)
                  .diaryStartTo(rootNode.get("diaryStartTo") != null ? LocalDate.parse(rootNode.get("diaryStartTo").asText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null)
                  .maxResults(rootNode.get("maxResults") != null ? (rootNode.get("maxResults")).asInt() : 10000)
@@ -49,10 +49,10 @@ public class SearchRequestDeserializer extends StdDeserializer<no.ssb.timeuse.su
     }
 
     private Map<String, List<String>> buildPredicateMap(JsonNode node) {
+        log.info("build predicate map from node {}", node);
         Map<String, List<String>> predicateMap = new HashMap<>();
 
         node.fieldNames().forEachRemaining( (field) -> {
-
             if(!field.equals("diaryStartFrom") && !field.equals("diaryStartTo") && !field.equals("maxResults")) {
                 ArrayNode orNode = node.withArray(field);
                 List<String> values = new ArrayList<>();
@@ -66,4 +66,6 @@ public class SearchRequestDeserializer extends StdDeserializer<no.ssb.timeuse.su
 
         return predicateMap;
     }
+
+
 }

@@ -32,6 +32,7 @@ public class RespondentRequest {
 
     private LocalDate diaryStart;
     private LocalDate diaryEnd;
+    private LocalDate diaryStartOrig;
     private String statusDiary;
     private String statusSurvey;
     private String statusRecruitment;

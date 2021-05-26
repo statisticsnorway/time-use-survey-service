@@ -39,6 +39,7 @@ public class RespondentResponse {
 
     LocalDate diaryStart;
     LocalDate diaryEnd;
+    LocalDate diaryStartOrig;
     String statusDiary;
     String statusSurvey;
     String statusRecruitment;
@@ -71,6 +72,7 @@ public class RespondentResponse {
                 .interviewerPhone(from.getInterviewer() != null ? from.getInterviewer().getPhone(): null)
                 .diaryStart(from.getDiaryStart())
                 .diaryEnd(from.getDiaryEnd())
+                .diaryStartOrig(from.getDiaryStartOrig())
                 .statusDiary(from.getStatusDiary())
                 .statusSurvey(from.getStatusSurvey())
                 .statusRecruitment(from.getStatusRecruitment())
