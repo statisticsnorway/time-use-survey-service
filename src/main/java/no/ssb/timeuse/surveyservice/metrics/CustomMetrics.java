@@ -1,5 +1,6 @@
 package no.ssb.timeuse.surveyservice.metrics;
 
+import io.micrometer.core.annotation.Timed;
 import lombok.AllArgsConstructor;
 import no.ssb.timeuse.surveyservice.activitiy.ActivityCategoryMetrics;
 import no.ssb.timeuse.surveyservice.appointment.AppointmentMetrics;
@@ -32,6 +33,7 @@ public class CustomMetrics {
     private final DiaryStartHistoryMetrics diaryStartHistoryMetrics;
 
     @Scheduled(initialDelay = 20000L, fixedDelay = 60000L)
+    @Timed(value = "tus.ss.custom.metrics", description = "Time taken to generate metrics")
     void calculateMetrics() {
 
         activityCategoryMetrics.generateMetrics();

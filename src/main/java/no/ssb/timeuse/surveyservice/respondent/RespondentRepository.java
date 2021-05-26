@@ -52,12 +52,12 @@ public interface RespondentRepository extends JpaRepository<Respondent, Long>, R
     List<MetricsCountStatusByDiaryStart> getNumberOfRespondentsPerStatusQuestionnaire();
 
 
-    @Query("select extract(dow from r.diaryStart) as dayOfWeek, r.statusSurvey as statusSurvey, count(r) as total "
-            + "from Respondent r group by dayOfWeek, statusSurvey")
+    @Query("select extract(year from r.diaryStart) as year, extract(month from r.diaryStart) as month, extract(dow from r.diaryStart) as dayOfWeek, r.statusSurvey as statusSurvey, count(r) as total "
+            + "from Respondent r group by year, month, dayOfWeek, statusSurvey")
     List<RespondentMetricsDayCount> getNumberOfRespondentsPerDiaryStartWeekday();
 
-    @Query("select extract(dow from r.diaryEnd) as dayOfWeek, r.statusSurvey as statusSurvey, count(r) as total "
-            + "from Respondent r group by dayOfWeek, statusSurvey")
+    @Query("select extract(year from r.diaryEnd) as year, extract(month from r.diaryEnd) as month, extract(dow from r.diaryEnd) as dayOfWeek, r.statusSurvey as statusSurvey, count(r) as total "
+            + "from Respondent r group by year, month, dayOfWeek, statusSurvey")
     List<RespondentMetricsDayCount> getNumberOfRespondentsPerDiaryEndWeekday();
 
 }
