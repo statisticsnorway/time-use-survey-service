@@ -32,7 +32,8 @@ public class CustomMetrics {
     private final InterviewerMetrics interviewerMetrics;
     private final DiaryStartHistoryMetrics diaryStartHistoryMetrics;
 
-    @Scheduled(initialDelay = 20000L, fixedDelay = 600000L)
+    @Scheduled(initialDelay = 20000L, fixedDelay = 60000L)
+    @Timed(value = "tus.ss.custom.metrics", description = "Time taken to generate metrics")
     void calculateMetrics() {
 
         activityCategoryMetrics.generateMetrics();

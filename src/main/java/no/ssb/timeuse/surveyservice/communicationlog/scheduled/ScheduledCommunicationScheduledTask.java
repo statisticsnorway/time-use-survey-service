@@ -40,7 +40,7 @@ public class ScheduledCommunicationScheduledTask {
     @Autowired
     ContactRespondentConsumer contactIo;
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 10000)
     @Transactional
     public void run() {
         log.info("get scheduledCommunications");

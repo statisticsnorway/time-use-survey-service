@@ -22,7 +22,7 @@ public class ContactRespondentScheduledTask {
     @Autowired
     ContactRespondentConsumer contactIo;
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 10000)
     @Transactional
     public void run() {
         val unsentEntries = repository.findAllByConfirmedSentIsNull().stream()
