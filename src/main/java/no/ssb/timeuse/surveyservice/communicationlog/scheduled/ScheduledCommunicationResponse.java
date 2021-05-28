@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Category;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Direction;
-import no.ssb.timeuse.surveyservice.communicationlog.enums.ScheduledType;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Type;
 
 import java.time.LocalDateTime;
@@ -16,7 +15,6 @@ import java.time.LocalDateTime;
 public class ScheduledCommunicationResponse {
     final Long id;
     final String resopondentCriteria;
-    final ScheduledType scheduledType;
     final Direction direction;
     final LocalDateTime communicationTriggered;
     final LocalDateTime confirmedSent;
@@ -32,7 +30,6 @@ public class ScheduledCommunicationResponse {
         return new ScheduledCommunicationResponse(
                 from.getId(),
                 from.getRespondentCriteria(),
-                from.getScheduledType(),
                 from.getDirection(),
                 from.getCommunicationTriggered(),
                 from.getConfirmedSent(),

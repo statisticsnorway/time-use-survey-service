@@ -1,5 +1,6 @@
 package no.ssb.timeuse.surveyservice.metrics;
 
+import io.micrometer.core.annotation.Timed;
 import lombok.AllArgsConstructor;
 import no.ssb.timeuse.surveyservice.activitiy.ActivityCategoryMetrics;
 import no.ssb.timeuse.surveyservice.appointment.AppointmentMetrics;

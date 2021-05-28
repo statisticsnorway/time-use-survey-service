@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Category;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Direction;
-import no.ssb.timeuse.surveyservice.communicationlog.enums.ScheduledType;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Type;
 
 import javax.persistence.Column;
@@ -37,10 +36,6 @@ public class ScheduledCommunication {
 
     @Column(name = "RESPONDENT_CRITERIA", nullable = false, length = 16000)
     private String respondentCriteria;
-
-    @Column(name = "SCHEDULED_TYPE", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ScheduledType scheduledType;
 
     @Column(name = "DIRECTION", nullable = false)
     @Enumerated(EnumType.STRING)

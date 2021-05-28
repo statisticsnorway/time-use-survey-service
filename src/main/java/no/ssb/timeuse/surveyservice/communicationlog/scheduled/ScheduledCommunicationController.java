@@ -35,8 +35,6 @@ public class ScheduledCommunicationController {
     public ScheduledCommunicationResponse createNewScheduledCommunication(
             @RequestBody ScheduledCommunicationRequest scheduledCommunicationRequest) {
         log.info("Post ScheduledCommunicationRequest: {}", scheduledCommunicationRequest);
-        ScheduledCommunication saved = service.save(scheduledCommunicationRequest);
-        log.info("saved scheduledcommunication: {}", saved);
         return ScheduledCommunicationResponse.map(service.save(scheduledCommunicationRequest));
     }
 

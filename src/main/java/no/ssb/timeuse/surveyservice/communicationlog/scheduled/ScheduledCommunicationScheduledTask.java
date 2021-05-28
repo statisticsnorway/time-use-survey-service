@@ -1,5 +1,7 @@
 package no.ssb.timeuse.surveyservice.communicationlog.scheduled;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -11,6 +13,7 @@ import no.ssb.timeuse.surveyservice.communicationlog.enums.Type;
 import no.ssb.timeuse.surveyservice.respondent.Respondent;
 import no.ssb.timeuse.surveyservice.respondent.RespondentRepository;
 import no.ssb.timeuse.surveyservice.search.RespondentSearchRepository;
+import no.ssb.timeuse.surveyservice.search.SearchRequestDeserializer;
 import no.ssb.timeuse.surveyservice.search.SearchRequestGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -41,29 +44,38 @@ public class ScheduledCommunicationScheduledTask {
     @Transactional
     public void run() {
         log.info("get scheduledCommunications");
-//        val unsentEntries = scheduledCommunicationRepository.findAllByConfirmedSentIsNullAndScheduledIsBefore(LocalDateTime.now())
-        val unsentEntries = scheduledCommunicationRepository.findAll()
+        val unsentEntries = scheduledCommunicationRepository.findAllByConfirmedSentIsNullAndScheduledIsBefore(LocalDateTime.now())
                 .stream()
-//                .filter(entry -> (entry.getDirection() == Direction.OUTGOING) && (entry.getType() == Type.EMAIL || entry.getType() == Type.SMS))
+                .filter(entry -> (entry.getDirection() == Direction.OUTGOING) && (entry.getType() == Type.EMAIL || entry.getType() == Type.SMS))
                 .collect(Collectors.toList());
+        ObjectMapper objectMapper = new ObjectMapper();
         if(!unsentEntries.isEmpty()) {
             log.info("Found " + unsentEntries.size() + " unsent scheduled communication entries.");
 
             unsentEntries.forEach((entry) -> {
                 entry.setCommunicationTriggered(LocalDateTime.now());
                 log.info("kriterier: {}", entry.getRespondentCriteria());
-                SearchRequestGroup searchRequestGroup = convertFromCriteriaToSearchRequest(entry.getRespondentCriteria());
-                List<Respondent> respondents = respondentRepository.searchForRespondents(searchRequestGroup);
+                SearchRequestGroup searchRequestGroup = null;
+                try {
+                    log.info("convert criteria to searchrequestGroup");
+                    searchRequestGroup = objectMapper.readValue(entry.getRespondentCriteria(), SearchRequestGroup.class);
+                    log.info("searchRequestGroup: {}", searchRequestGroup);
+                    List<Respondent> respondents = respondentRepository.searchForRespondents(searchRequestGroup);
+                    log.info("respondents: {}", respondents.size());
 
-                List<CommunicationLogEntry> newCommunicationLogs = new ArrayList<>();
-                respondents.forEach(respondent -> {
-                    CommunicationLogEntry communicationLogEntry = createCommunicationLogEntryForRespondent(entry, respondent);
-                    newCommunicationLogs.add(communicationLogEntry);
-                });
-                List<CommunicationLogEntry> savedCommunicationLogs = communicationLogRepository.saveAll(newCommunicationLogs);
-                log.info("created {} new communicationLogEntries for criteria {}",
-                        savedCommunicationLogs.size(), entry.getRespondentCriteria());
-                entry.setConfirmedSent(LocalDateTime.now());
+                    List<CommunicationLogEntry> newCommunicationLogs = new ArrayList<>();
+                    respondents.forEach(respondent -> {
+                        CommunicationLogEntry communicationLogEntry = createCommunicationLogEntryForRespondent(entry, respondent);
+                        newCommunicationLogs.add(communicationLogEntry);
+                    });
+                    List<CommunicationLogEntry> savedCommunicationLogs = communicationLogRepository.saveAll(newCommunicationLogs);
+                    log.info("created {} new communicationLogEntries for criteria {}",
+                            savedCommunicationLogs.size(), entry.getRespondentCriteria());
+                    entry.setConfirmedSent(LocalDateTime.now());
+                } catch (JsonProcessingException e) {
+                    log.error("Error converting respondentcriteria to searchrequestgroup ({})", entry.getRespondentCriteria());
+                }
+
             });
 
         }
@@ -85,9 +97,11 @@ public class ScheduledCommunicationScheduledTask {
 
     }
 
-    private SearchRequestGroup convertFromCriteriaToSearchRequest(String respondentCriteria) {
-        log.info("convert {}", respondentCriteria);
-//        SearchRequestGroup searchRequestGroup = new SearchRequestDeserializer(respondentCriteria);
-        return new SearchRequestGroup();
-    }
+//    private SearchRequestGroup convertFromCriteriaToSearchRequest(String respondentCriteria) throws JsonProcessingException {
+//        log.info("convert {}", respondentCriteria);
+//        respondentCriteria.
+//
+//        log.info("converted searchRequestGroup: {}", searchRequestGroup);
+//        return searchRequestGroup;
+//    }
 }

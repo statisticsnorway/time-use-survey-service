@@ -2,13 +2,16 @@ package no.ssb.timeuse.surveyservice.communicationlog.scheduled;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
+import net.minidev.json.JSONObject;
 import no.ssb.timeuse.surveyservice.search.SearchRequestGroup;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 
 @Slf4j
@@ -24,7 +27,6 @@ public class ScheduledCommunicationService {
 
         val scheduledCommunication = ScheduledCommunication.builder()
                 .respondentCriteria(criteria)
-                .scheduledType(request.getScheduledType())
                 .direction(request.getDirection())
                 .type(request.getType())
                 .category(request.getCategory())
@@ -43,7 +45,10 @@ public class ScheduledCommunicationService {
     private String criteriaToString(SearchRequestGroup respondentCriteria) {
         try {
             log.info("convert {}", respondentCriteria);
-            return new ObjectMapper().writeValueAsString(respondentCriteria);
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+            log.info("respondentCriteria as string: {}", objectMapper.writeValueAsString(respondentCriteria));
+            return objectMapper.writeValueAsString(respondentCriteria);
         } catch (JsonProcessingException e) {
             log.error("Error json-stringify map {}", respondentCriteria);
         }

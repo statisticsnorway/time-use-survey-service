@@ -8,13 +8,10 @@ import lombok.Setter;
 import lombok.ToString;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Category;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Direction;
-import no.ssb.timeuse.surveyservice.communicationlog.enums.ScheduledType;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Type;
 import no.ssb.timeuse.surveyservice.search.SearchRequestGroup;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter
@@ -24,7 +21,6 @@ import java.util.Map;
 @ToString
 public class ScheduledCommunicationRequest {
     private SearchRequestGroup respondentCriteria;
-    private ScheduledType scheduledType;
     private Direction direction;
     private Type type;
     private Category category;
