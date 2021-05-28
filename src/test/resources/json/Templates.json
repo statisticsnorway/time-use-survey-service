@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "sms1",
+    "text": "Dette er en sms\n",
+    "type": "sms",
+    "description": "Test sms mal",
+    "createdBy": "ADMIN",
+    "createdTime": "2021-05-28T12:56:37.767296"
+  },
+  {
+    "id": 2,
+    "name": "Epost1",
+    "text": "<p><strong>Overskrift</strong></p>\n<p>Vanlig tekst</p>\n<p><em>Noe i kursiv</em></p>\n<p>Hilsen SSB</p>",
+    "type": "email",
+    "description": "Test epost mal",
+    "createdBy": "ADMIN",
+    "createdTime": "2021-05-28T12:57:58.547418"
+  },
+  {
+    "id": 3,
+    "name": "Universell",
+    "text": "Testmal \n\nKan brukes til både epost og sms. \n",
+    "type": "universal",
+    "description": "Testmal for både epost og sms",
+    "createdBy": "ADMIN",
+    "createdTime": "2021-05-28T13:42:25.417919"
+  }
+]
