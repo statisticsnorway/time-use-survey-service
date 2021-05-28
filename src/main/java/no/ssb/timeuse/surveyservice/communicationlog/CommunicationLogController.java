@@ -3,7 +3,7 @@ package no.ssb.timeuse.surveyservice.communicationlog;
 import io.micrometer.core.annotation.Timed;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import no.ssb.timeuse.surveyservice.communicationlog.contactio.ContactIoConsumer;
+import no.ssb.timeuse.surveyservice.communicationlog.contactRespondent.ContactRespondentConsumer;
 import no.ssb.timeuse.surveyservice.exception.MethodNotAllowedException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class CommunicationLogController {
     private final CommunicationLogRepository repository;
     private final CommunicationLogService service;
-    private final ContactIoConsumer consumer;
+    private final ContactRespondentConsumer consumer;
 
     @GetMapping
     public List<CommunicationLogEntryResponse> entries(@RequestParam (required = false) Optional<UUID> respondentId) {
@@ -44,6 +44,13 @@ public class CommunicationLogController {
     public List<CommunicationLogEntryResponse> createNewCommunicationLogs(@RequestBody CommunicationLogEntryRequest communicationLogEntryRequest) {
         log.info("communicationLogEntryRequest: {}", communicationLogEntryRequest);
         return service.save(communicationLogEntryRequest).stream()
+                .map(CommunicationLogEntryResponse::map)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/all")
+    public List<CommunicationLogEntryResponse> allEntries() {
+        return repository.findAll().stream()
                 .map(CommunicationLogEntryResponse::map)
                 .collect(Collectors.toList());
     }

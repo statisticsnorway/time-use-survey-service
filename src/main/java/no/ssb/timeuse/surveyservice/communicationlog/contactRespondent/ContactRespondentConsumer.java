@@ -1,4 +1,4 @@
-package no.ssb.timeuse.surveyservice.communicationlog.contactio;
+package no.ssb.timeuse.surveyservice.communicationlog.contactRespondent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import static no.ssb.timeuse.surveyservice.communicationlog.enums.Type.SMS;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class ContactIoConsumer {
+public class ContactRespondentConsumer {
 
     @Value("${contact-io.url}")
     private String url;
@@ -31,7 +31,7 @@ public class ContactIoConsumer {
             return client.post()
                     .uri(url)
                     .body(BodyInserters.fromValue(entries.stream()
-                            .map(ContactIoConsumer::toDto)
+                            .map(ContactRespondentConsumer::toDto)
                             .collect(Collectors.toList())))
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve()
@@ -44,16 +44,16 @@ public class ContactIoConsumer {
         }
     }
 
-    private static ContactIoDto toDto(CommunicationLogEntry entry) {
+    private static ContactRespondentDto toDto(CommunicationLogEntry entry) {
         if(entry.getType() == SMS) {
-            return ContactIoDto.builder()
+            return ContactRespondentDto.builder()
                     .requestId(entry.getId().toString())
                     .type("sms")
                     .to(entry.getRespondent().getPhone())
                     .message(entry.getMessage())
                     .build();
         } else  {
-            return ContactIoDto.builder()
+            return ContactRespondentDto.builder()
                     .requestId(entry.getId().toString())
                     .type("email")
                     .replyTo("tidsbruk@ssb.no")

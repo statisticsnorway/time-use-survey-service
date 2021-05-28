@@ -1,4 +1,4 @@
-package no.ssb.timeuse.surveyservice.communicationlog.contactio;
+package no.ssb.timeuse.surveyservice.communicationlog.contactRespondent;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ContactIoDto {
+public class ContactRespondentDto {
     private String requestId;
     private String type;
     private String replyTo;

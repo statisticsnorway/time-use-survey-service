@@ -1,4 +1,4 @@
-package no.ssb.timeuse.surveyservice.communicationlog.contactio;
+package no.ssb.timeuse.surveyservice.communicationlog.contactRespondent;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -7,7 +7,6 @@ import no.ssb.timeuse.surveyservice.communicationlog.CommunicationLogRepository;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Category;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Direction;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Type;
-import no.ssb.timeuse.surveyservice.respondent.Respondent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +15,12 @@ import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class ContactIoScheduledTask {
+public class ContactRespondentScheduledTask {
 
     @Autowired
     CommunicationLogRepository repository;
     @Autowired
-    ContactIoConsumer contactIo;
+    ContactRespondentConsumer contactIo;
 
     @Scheduled(fixedDelay = 10000)
     @Transactional

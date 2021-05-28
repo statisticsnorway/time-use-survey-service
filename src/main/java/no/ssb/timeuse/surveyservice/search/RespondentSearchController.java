@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @Slf4j
 @RequestMapping("/v1/respondents/search")
@@ -22,19 +23,17 @@ public class RespondentSearchController {
 
     private final RespondentSearchService service;
 
-    @CrossOrigin
     @PostMapping("/search-specific")
     public ResponseEntity<?> search(@RequestBody HashMap<String, String> request) {
         return new ResponseEntity<>(service.search(), HttpStatus.OK);
     }
 
-    @CrossOrigin
+
     @PostMapping
     public ResponseEntity<?> searchSpecific(@RequestBody SearchRequest searchRequest) {
         return new ResponseEntity<>(service.searchRespondentSpecific(searchRequest), HttpStatus.OK);
     }
 
-    @CrossOrigin
     @PostMapping("/group")
     public ResponseEntity<?> searchGroup(@RequestBody SearchRequestGroup searchRequestGroup) {
         log.info("gruppesøk: {}", searchRequestGroup);
