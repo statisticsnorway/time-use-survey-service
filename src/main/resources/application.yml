@@ -20,7 +20,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL82Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
 springdoc:
   api-docs:
