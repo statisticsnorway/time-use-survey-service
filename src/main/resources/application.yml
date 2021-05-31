@@ -60,9 +60,6 @@ tracing:
     - path: "/health/ready"
       enabled: false
 
-server:
-  port: 9100
-
 
 contact-io:
 #  url: ${CONTACT_IO_URL}
