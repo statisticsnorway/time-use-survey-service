@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,12 @@ public class RespondentController {
         return repository.findAll().stream()
                 .map(RespondentResponse::map)
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping
+    public ResponseEntity<String> saveAll(@RequestBody List<Respondent> respondents) {
+        int saved = repository.saveAll(respondents).size();
+        return new ResponseEntity<>("Saved " + saved + " dents to base.", HttpStatus.OK);
     }
 
     @GetMapping("{respondentId}")
