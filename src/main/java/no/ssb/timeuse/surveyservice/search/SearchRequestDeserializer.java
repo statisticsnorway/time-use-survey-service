@@ -41,7 +41,7 @@ public class SearchRequestDeserializer extends StdDeserializer<no.ssb.timeuse.su
     public SearchRequestGroup deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode rootNode = jsonParser.getCodec().readTree(jsonParser);
         log.info("parse json: {}", rootNode);
-        log.info("diaryStartFrom: {}", rootNode.get("diaryStartFrom").asText());
+        log.info("diaryStartFrom: {}", rootNode.get("diaryStartFrom") != null ? rootNode.get("diaryStartFrom").asText() : "null");
         SearchRequestGroup searchRequestGroup = SearchRequestGroup.builder()
                  .diaryStartFrom(dateOf(rootNode, "diaryStartFrom"))
                  .diaryStartTo(dateOf(rootNode, "diaryStartTo"))
@@ -58,13 +58,6 @@ public class SearchRequestDeserializer extends StdDeserializer<no.ssb.timeuse.su
     private LocalDate dateOf(JsonNode rootNode, String dateField) {
         JsonNode dateNode = rootNode.get(dateField);
         log.info("dateField {} = {}, of type {}", dateField, dateNode, rootNode.get(dateField) != null ? dateNode.getNodeType().name() : " tom");
-//
-//        if (dateNode.getNodeType().name().equals("OBJECT")) {
-//            log.info("dateNode is OBJECT");
-//            dateNode.fields().forEachRemaining(field -> log.info("{} = {}", field.getKey(), field.getValue()));
-//            log.info("year: {}, month: {}, date: {}", dateNode.get("year"), dateNode.get("monthValue"), dateNode.get("dayOfMonth"));
-//            log.info("new Date: {}", LocalDate.of(dateNode.get("year").asInt(), dateNode.get("monthValue").asInt(), dateNode.get("dayOfMonth").asInt()));
-//        }
 
         LocalDate date = ((dateNode == null || dateNode.getNodeType().name().equals("NULL")) ? null :
                 (dateNode.getNodeType().name().equals("STRING") ?
