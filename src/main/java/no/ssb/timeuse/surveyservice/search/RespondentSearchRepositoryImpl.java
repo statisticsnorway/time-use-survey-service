@@ -3,11 +3,9 @@ package no.ssb.timeuse.surveyservice.search;
 import lombok.extern.slf4j.Slf4j;
 import no.ssb.timeuse.surveyservice.appointment.Appointment;
 import no.ssb.timeuse.surveyservice.respondent.Respondent;
-import no.ssb.timeuse.surveyservice.respondent.Respondent;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -25,6 +23,8 @@ public class RespondentSearchRepositoryImpl implements RespondentSearchRepositor
 
     @PersistenceContext
     private EntityManager manager;
+
+    private static final LocalDate defaultFrom = LocalDate.now().minusYears(2);
 
     @Override
     public List<Respondent> searchForRespondents(SearchRequestGroup groupRequest) {
@@ -55,6 +55,9 @@ public class RespondentSearchRepositoryImpl implements RespondentSearchRepositor
     }
 
     private Predicate applyTimeInterval(Predicate fieldPredicate, LocalDate from, LocalDate to, CriteriaBuilder cb, Root<Respondent> root) {
+        //RSA 04.06.2021: set default from-date to avoid null-predicate
+        //TODO: look for a better solution
+        from = from != null ? from : defaultFrom;
         return cb.and(fieldPredicate,
                 (from != null && to != null ? cb.between(root.get("diaryStart"), from, to) :
                         (from != null && to == null ? cb.greaterThanOrEqualTo(root.get("diaryStart"), from) :

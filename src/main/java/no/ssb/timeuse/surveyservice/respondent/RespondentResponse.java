@@ -82,7 +82,7 @@ public class RespondentResponse {
                 .recruitmentMinutesSpent(from.getRecruitmentMinutesSpent())
                 .acceptedInitialDiaryStart(from.getAcceptedInitialDiaryStart())
                 .build();
-        log.info("response buildt: {}", response);
+//        log.info("response buildt: {}", response);
         return response;
     }
 }
