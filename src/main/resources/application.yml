@@ -65,3 +65,12 @@ contact-io:
 #  url: ${CONTACT_IO_URL}
   enabled: true
   url: http:dummyhttp.ssb
+
+scheduled:
+  metrics:
+    initial: 20000
+    interval: 60000
+  communication-log:
+    interval: 10000
+  communication-scheduled:
+    interval: 10000

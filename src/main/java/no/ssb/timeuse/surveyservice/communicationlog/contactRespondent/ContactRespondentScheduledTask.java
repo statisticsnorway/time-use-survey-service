@@ -9,12 +9,14 @@ import no.ssb.timeuse.surveyservice.communicationlog.enums.Direction;
 import no.ssb.timeuse.surveyservice.communicationlog.enums.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Component
 public class ContactRespondentScheduledTask {
 
     @Autowired
@@ -22,9 +24,10 @@ public class ContactRespondentScheduledTask {
     @Autowired
     ContactRespondentConsumer contactIo;
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelayString = "${scheduled.communication-log.interval}")
     @Transactional
     public void run() {
+        log.info("run scheduled communication log");
         val unsentEntries = repository.findAllByConfirmedSentIsNull().stream()
                 .filter(entry -> (entry.getDirection() == Direction.OUTGOING) && (entry.getType() == Type.EMAIL || entry.getType() == Type.SMS))
                 .collect(Collectors.toList());
