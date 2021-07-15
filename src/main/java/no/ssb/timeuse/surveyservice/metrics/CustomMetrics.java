@@ -20,7 +20,9 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class CustomMetrics {
 
-    public static final String DB_COUNT = "tus.ss.db.count";
+    public static final String DB_COUNT = "survey.db.count";
+    public static final String TIMED_NAME = "survey.timed.methods";
+    public static final String TIMED_DESCRIPTION = "Metrics for custom methods";
 
     private final ActivityCategoryMetrics activityCategoryMetrics;
     private final CommunicationLogMetrics communicationLogMetrics;
@@ -34,7 +36,7 @@ public class CustomMetrics {
 
     @Scheduled(initialDelayString = "${scheduled.metrics.initial}",
             fixedDelayString = "${scheduled.metrics.interval}")
-    @Timed(value = "tus.ss.custom.metrics", description = "Time taken to generate metrics")
+    @Timed(value = TIMED_NAME, description = TIMED_DESCRIPTION)
     void calculateMetrics() {
 
         activityCategoryMetrics.generateMetrics();

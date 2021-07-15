@@ -41,7 +41,7 @@ public class MultiTaggedGauge {
     private String name;
     private String[] tagNames;
     private MeterRegistry registry;
-    private Map<String, no.ssb.timeuse.surveyservice.metrics.DoubleWrapper> gaugeValues = new HashMap<>();
+    private Map<String, DoubleWrapper> gaugeValues = new HashMap<>();
 
     public MultiTaggedGauge(String name, MeterRegistry registry, String ... tags) {
         this.name = name;
@@ -56,14 +56,14 @@ public class MultiTaggedGauge {
             throw new IllegalArgumentException("Gauge tags mismatch! Expected args are "+Arrays.toString(tagNames)+", provided tags are "+valuesString);
         }
 
-        no.ssb.timeuse.surveyservice.metrics.DoubleWrapper number = gaugeValues.get(valuesString);
+        DoubleWrapper number = gaugeValues.get(valuesString);
         if(number == null) {
             List<Tag> tags = new ArrayList<>(tagNames.length);
             for(int i = 0; i<tagNames.length; i++) {
                 tags.add(new ImmutableTag(tagNames[i], tagValues[i]));
             }
-            no.ssb.timeuse.surveyservice.metrics.DoubleWrapper valueHolder = new no.ssb.timeuse.surveyservice.metrics.DoubleWrapper(value);
-            Gauge.builder(name, valueHolder, no.ssb.timeuse.surveyservice.metrics.DoubleWrapper::getValue).tags(tags).register(registry);
+            DoubleWrapper valueHolder = new DoubleWrapper(value);
+            Gauge.builder(name, valueHolder, DoubleWrapper::getValue).tags(tags).register(registry);
             gaugeValues.put(valuesString, valueHolder);
         } else {
             number.setValue(value);

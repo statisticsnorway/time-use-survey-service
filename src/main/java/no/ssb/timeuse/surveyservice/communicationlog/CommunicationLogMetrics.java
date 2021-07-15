@@ -28,7 +28,7 @@ public class CommunicationLogMetrics {
         taggedGaugeCategory = new TaggedGauge(METRICS_PREFIX+"category", "category", meterRegistry);
     }
 
-    @Timed(value = "tus.ss.custom.metrics", description = "Time taken to generate metrics")
+    @Timed(value = CustomMetrics.TIMED_NAME, description = CustomMetrics.TIMED_DESCRIPTION)
     public void generateMetrics() {
         countTotals();
         countPerCategory();
