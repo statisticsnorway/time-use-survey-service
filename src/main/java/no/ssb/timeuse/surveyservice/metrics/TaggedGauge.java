@@ -34,7 +34,7 @@ public class TaggedGauge {
     private String name;
     private String tagName;
     private MeterRegistry registry;
-    private Map<String, no.ssb.timeuse.surveyservice.metrics.DoubleWrapper> gaugeValues = new HashMap<>();
+    private Map<String, DoubleWrapper> gaugeValues = new HashMap<>();
 
     public TaggedGauge(String name, String tagName, MeterRegistry registry) {
         this.name = name;
@@ -43,10 +43,10 @@ public class TaggedGauge {
     }
 
     public void set(String tagValue, double value){
-        no.ssb.timeuse.surveyservice.metrics.DoubleWrapper number = gaugeValues.get(tagValue);
+        DoubleWrapper number = gaugeValues.get(tagValue);
         if(number == null) {
-            no.ssb.timeuse.surveyservice.metrics.DoubleWrapper valueHolder = new no.ssb.timeuse.surveyservice.metrics.DoubleWrapper(value);
-            Gauge.builder(name, valueHolder, no.ssb.timeuse.surveyservice.metrics.DoubleWrapper::getValue).tags(tagName, tagValue).register(registry);
+            DoubleWrapper valueHolder = new DoubleWrapper(value);
+            Gauge.builder(name, valueHolder, DoubleWrapper::getValue).tags(tagName, tagValue).register(registry);
             gaugeValues.put(tagValue, valueHolder);
 
         } else {

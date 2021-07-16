@@ -48,7 +48,7 @@ public class RespondentMetrics {
         mtgDiaryEndHeatmap = new MultiTaggedGauge(METRICS_PREFIX + "heatmap.diaryend", meterRegistry, "year", "month", "weekday", "survey-status");
     }
 
-    @Timed(value = "tus.ss.custom.metrics", description = "Time taken to generate metrics")
+    @Timed(value = CustomMetrics.TIMED_NAME, description = CustomMetrics.TIMED_DESCRIPTION)
     public void generateMetrics() {
         countTotals();
         countPerStatusSurvey();
